@@ -52,7 +52,7 @@ def GetServer(server_id):
         return [queryresult.server_id,
                 queryresult.server_premium,
                 queryresult.server_announce,
-                pickle.loads(bytearray().extend(queryresult.disabled_commands))]
+                pickle.loads(bytearray(queryresult.disabled_commands))]
 
 
 # Function for toggling premium on a server
