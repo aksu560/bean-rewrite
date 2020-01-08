@@ -71,3 +71,9 @@ def ToggleAnnouncements(server_id):
     queryresult.server_premium = targetvalue
     db.commit()
     return targetvalue
+
+
+def RemoveServer(server_id):
+    for queryresult in db.query(Servers).filter(server_id == server_id):
+        db.delete(queryresult)
+        db.commit()
