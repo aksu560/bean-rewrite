@@ -9,6 +9,8 @@ auth = open(os.getcwd() + "/auth.ini")
 client.cfgParser.read_file(auth)
 clientKey = client.cfgParser.get("discord", "key")
 
+client = commands.Bot(command_prefix="&")
+
 client.allCogs = [
     "cogs.upkeep",
 ]
@@ -16,7 +18,7 @@ client.allCogs = [
 
 @client.event
 async def on_ready():
-    print("==== Starting to initialize ====")
+    print("==== Booting Up ====")
 
     print("Loading cogs...")
     for cog in client.allCogs:
@@ -26,11 +28,11 @@ async def on_ready():
         except Exception as err:
             print(f"Failed to load cog \"{cog}\" [{type(err).__name__}: {err}]")
 
-    print(f"-- Connected to {len(client.servers)} servers:")
-    for server in client.servers:
+    print(f"-- Connected to {len(client.guilds)} servers:")
+    for server in client.guilds:
         print(f":: {server.name}")
 
-    print("==== Initialization success! ====")
+    print("==== Boot Success! ====")
 
 
 @client.event
