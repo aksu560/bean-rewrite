@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 import sqlalchemy_utils as db_utils
 from sqlalchemy import create_engine
@@ -30,6 +30,7 @@ class Servers(Base):
         return [self.server_id, self.server_premium, self.server_announce, pickle.loads(self.disabled_commands)]
 
 
+MetaData().create_all(engine)
 Session.configure(bind=engine)
 
 db = Session()
@@ -43,6 +44,7 @@ def AddServer(server_id):
                    disabled_commands=pickle.dumps([])))
     db.commit()
 
+
 # Function for querying a server from the table
 def GetServer(server_id):
     queryresult = db.query(Servers).filter(server_id == server_id)
@@ -50,6 +52,7 @@ def GetServer(server_id):
             queryresult.server_premium,
             queryresult.server_announce,
             pickle.loads(queryresult.disabled_commands)]
+
 
 # Function for toggling premium on a server
 def TogglePremium(server_id):
@@ -59,6 +62,7 @@ def TogglePremium(server_id):
     db.commit()
     return targetvalue
 
+
 # Function for toggling announcements on a server
 def ToggleAnnouncements(server_id):
     queryresult = db.query(Servers).filter(server_id == server_id)
@@ -66,8 +70,3 @@ def ToggleAnnouncements(server_id):
     queryresult.server_premium = targetvalue
     db.commit()
     return targetvalue
-
-
-
-
-
