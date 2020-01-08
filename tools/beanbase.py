@@ -48,11 +48,11 @@ def AddServer(server_id):
 
 # Function for querying a server from the table
 def GetServer(server_id):
-    queryresult = db.query(Servers).filter(server_id == server_id)
-    return [queryresult.server_id,
-            queryresult.server_premium,
-            queryresult.server_announce,
-            pickle.loads(queryresult.disabled_commands)]
+    for queryresult in db.query(Servers).filter(server_id == server_id):
+        return [queryresult.server_id,
+                queryresult.server_premium,
+                queryresult.server_announce,
+                pickle.loads(queryresult.disabled_commands)]
 
 
 # Function for toggling premium on a server
