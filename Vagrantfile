@@ -10,9 +10,11 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "debian/jessie64"
 
-  config.vm.network "forwarded_port", guest: 3306, host: 3306
+  config.vm.network "forwarded_port", guest: 3306, host: 1337
   config.vm.network "private_network", ip: "192.168.33.10"
   config.vm.provision "shell",
     path: "provision/mysql.sh"
+  config.vm.provision "shell",
+    path: "provision/python.sh"
 
 end
