@@ -6,6 +6,3 @@ apt-get update
 apt-get install -y mysql-server
 sudo systemctl start mysql
 sudo /etc/init.d/mysql restart
-
-mysql -uroot -uroot -proot -e "grant all privileges on bot.* to 'bean' identified by 'root'"
-mysql -uroot -ubean -proot -e "CREATE DATABASE IF NOT EXISTS bot"
