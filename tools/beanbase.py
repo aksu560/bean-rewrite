@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, MetaData
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 import sqlalchemy_utils as db_utils
 from sqlalchemy import create_engine
@@ -30,10 +30,11 @@ class Servers(Base):
         return [self.server_id, self.server_premium, self.server_announce, pickle.loads(self.disabled_commands)]
 
 
-MetaData().create_all(engine)
+Base.metadata.create_all(engine)
 Session.configure(bind=engine)
 
 db = Session()
+db.commit()
 
 
 # Function for adding new servers to the table
