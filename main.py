@@ -37,12 +37,8 @@ async def on_ready():
 
 
 @client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
+async def on_message(msg):
+    await client.process_commands(msg)
 
 
 client.run(clientKey)
