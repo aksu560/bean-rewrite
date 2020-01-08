@@ -16,5 +16,7 @@ Vagrant.configure("2") do |config|
     path: "provision/mysql.sh"
   config.vm.provision "shell",
     path: "provision/python.sh"
+  config.vm.provision "shell",
+    path: "provision/launch.sh"
 
 end
