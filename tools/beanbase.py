@@ -1,11 +1,16 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
 import sqlalchemy_utils as db_utils
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+Session = sessionmaker()
 
 # Create the database if it does not exist
 if not db_utils.database_exists('mysql://root:root@localhost/beanbase'):
     db_utils.create_database('mysql://root:root@localhost/beanbase')
+
+engine = create_engine('mysql://root:root@localhost/beanbase')
 
 # Declaring the base class for declarative structures
 Base = declarative_base()
@@ -21,3 +26,5 @@ class Servers(Base):
     def __repr__(self):
         return [self.server_id, self.server_premium, self.server_announce]
 
+
+Session.configure(bind=engine)
