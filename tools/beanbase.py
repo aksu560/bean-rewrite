@@ -24,7 +24,7 @@ class Servers(Base):
     server_id = Column(String(17), primary_key=True)
     server_premium = Column('Premium Server', Boolean)
     server_announce = Column('Announcements enabled', Boolean)
-    disabled_commands = Column('Disabled Commands', String)
+    disabled_commands = Column('Disabled Commands', String(21844))
 
     def __repr__(self):
         return [self.server_id, self.server_premium, self.server_announce, pickle.loads(self.disabled_commands)]
