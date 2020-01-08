@@ -1,0 +1,7 @@
+[submodule "bean-backend"]
+	path = bean-backend
+	url = https://github.com/aksu560/bean-backend
+
+[submodule "bean-bot"]
+	path = bean-bot
+	url = https://github.com/aksu560/bean-bot
