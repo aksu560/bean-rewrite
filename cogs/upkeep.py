@@ -100,6 +100,7 @@ class Upkeep(commands.Cog):
                 pos1 = output.find('\n', 1700, 1900)
                 texts.append(output[:pos1] + "```")
                 texts.append(f"```py\n{output[pos1:]}```")
+                print(f"{len(''.join(texts))} > {len(output)}")
                 if len(''.join(texts)) >= len(output):
                     looping = False
 
