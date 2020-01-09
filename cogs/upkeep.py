@@ -98,7 +98,7 @@ class Upkeep(commands.Cog):
             texts = []
             while looping:
                 pos1 = output.find('\n', 1700, 1900)
-                texts.append()
+                texts.append(output[:pos1])
                 output = output[pos1:]
 
                 if len(output) < 1996:
