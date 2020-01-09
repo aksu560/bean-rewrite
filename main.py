@@ -20,7 +20,7 @@ clientKey = client.cfgParser.get("discord", "key")
 
 
 client.allCogs = [
-    "cogs.upkeep",
+    "cogs.upkeep"
 ]
 
 
@@ -49,6 +49,12 @@ async def on_ready():
 @client.event
 async def on_message(msg):
     await client.process_commands(msg)
+
+@client.event
+async def on_guild_join(guild):
+    print(f"Joined {guild.name}. Added to db.}")
+    beanbase.AddServer(str(guild.id))
+
 
 
 client.run(clientKey)
