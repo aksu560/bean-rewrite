@@ -1,4 +1,5 @@
 from discord.ext import commands
+import discord
 import sys
 import os
 from .tools import beanbase
@@ -58,6 +59,26 @@ class Upkeep(commands.Cog):
         if channel is None:
             channel = await self.client.fetch_user(int(target))
         await channel.send(msg)
+
+    @commands.command(brief="[tag someone]")
+    async def AddBotAdmin(self, ctx, new_admin: discord.Member):
+        """Add new bot administrator"""
+        success = beanbase.AddBotAdmin(str(new_admin.id),str(ctx.author.id))
+        if success:
+            await ctx.send(f"User <@{new_admin.id}> added as a bot level administrator.")
+        else:
+            await ctx.send(f"User <@{new_admin.id}> is already a bot level administrator.")
+
+
+    @commands.command(brief="[tag someone]")
+    async def RemoveBotAdmin(self, ctx, removed_admin: discord.Member):
+        """Add new bot administrator"""
+        success = beanbase.RemoveBotAdmin(str(removed_admin.id), str(ctx.author.id))
+        if success:
+            await ctx.send(f"User' <@{removed_admin.id}> bot level administrative rights have been revoked.")
+        else:
+            await ctx.send(f"User <@{removed_admin.id}> is not a bot level administrator.")
+
 
     @MessageTo.error
     async def MessageTo_eh(self, ctx: commands.Context, err: Exception):

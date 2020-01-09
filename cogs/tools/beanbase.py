@@ -203,7 +203,7 @@ def GetServerRoles(user, server):
     return user_roles
 
 
-# Add a new bot level administrator
+# Add a new bot level administrator. Returns True if successful, False if not
 def AddBotAdmin(granted_user_id, granter_id):
     for result in db.query(BotAdmins):
         if result.user_id == granted_user_id:
@@ -213,6 +213,7 @@ def AddBotAdmin(granted_user_id, granter_id):
     db.add(new_admin)
     db.commit()
     print(f"New admin {granted_user_id} added by {granter_id}")
+    return True
 
 
 bot_admins = []
@@ -224,7 +225,7 @@ if bot_owner_id not in bot_admins:
     AddBotAdmin(bot_owner_id, "Bean")
 
 
-# Remove a bot level administrator
+# Remove a bot level administrator. Returns True if successful, False if not
 def RemoveBotAdmin(removed_id, remover_id):
     for result in db.query(BotAdmins).filter(BotAdmins.user_id == removed_id):
         db.delete(result)
