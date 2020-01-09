@@ -52,7 +52,7 @@ async def on_message(msg):
 
 @client.event
 async def on_guild_join(guild):
-    print(f"Joined {guild.name}. Added to db.}")
+    print(f"Joined {guild.name}. Added to db.")
     beanbase.AddServer(str(guild.id))
 
 @client.event
