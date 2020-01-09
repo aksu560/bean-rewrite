@@ -86,4 +86,6 @@ def RemoveServer(wanted_server_id):
 
 
 def GetAllServers():
-    return db.query(Servers)
+    output = []
+    for queryresult in db.query(Servers):
+        output.append(queryresult.server_id)
