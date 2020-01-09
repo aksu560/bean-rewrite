@@ -5,12 +5,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, relationship
 import pickle
 from datetime import datetime
-import configparser
-import os
 
-auth = open(os.getcwd() + "/cogs/tools/auth.ini")
-configparser.ConfigParser().read_file(auth)
-bot_owner_id = configparser.ConfigParser().get("bot_owner", "id")
+# Replace the ID with your own
+bot_owner_id = "114796980739244032"
 print(f"Bot owner if: {bot_owner_id}")
 
 Session = sessionmaker()
