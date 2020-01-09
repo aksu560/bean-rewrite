@@ -1,8 +1,7 @@
-import discord
 from discord.ext import commands
 import configparser
 import os
-from tools import beanbase
+from cogs.tools import beanbase
 import logging
 
 

@@ -1,7 +1,7 @@
 from discord.ext import commands
 import sys
 import os
-from ..tools import beanbase
+from .tools import beanbase
 
 
 class Upkeep(commands.Cog):

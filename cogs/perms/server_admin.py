@@ -2,7 +2,7 @@ import sys
 sys.path.append('..')
 
 from discord.ext import commands
-from tools import beanbase
+from cogs.tools import beanbase
 
 
 def isServerAdmin(ctx: commands.Context):
