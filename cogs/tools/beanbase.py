@@ -182,7 +182,7 @@ def GetServerRoles(user, server):
     user_roles = []
     server_settings = GetServerSettings(server)
     print(server_settings)
-    if server_settings is None:
+    if server_settings == {}:
         return None
     if user in server_settings['administrators']:
         user_roles.append('administrators')
