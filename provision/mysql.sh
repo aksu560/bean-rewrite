@@ -7,6 +7,6 @@ sudo apt-get install -y mysql-server
 sudo apt-get install
 sudo systemctl start mysql
 sudo /etc/init.d/mysql restart
-sudo apt-get install libmysqlclient-dev
+sudo apt-get -y install libmysqlclient-dev
 pip3 install mysqlclient
 pip3 install sqlalchemy_utils
