@@ -6,8 +6,6 @@ class Help(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
-    )
-
     @commands.command()
     async def Help(self, ctx: commands.Context):
         """Is a very helpful command"""
