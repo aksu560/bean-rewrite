@@ -5,6 +5,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, relationship
 import pickle
 from datetime import datetime
+import configparser
+import os
+
+auth = open(os.getcwd() + "../../auth.ini")
+configparser.ConfigParser().read_file(auth)
+bot_owner_id = configparser.ConfigParser().get("bot_owner", "id")
+print(f"Bot owner if: {bot_owner_id}")
 
 Session = sessionmaker()
 
@@ -24,8 +31,8 @@ class Servers(Base):
 
     server_id = Column('server_id', String(20), primary_key=True)
     server_level = Column('server_level', Integer)
-    date_added = Column('Date server added the bot', DateTime)
-    settings = Column('Settings', LargeBinary)
+    date_added = Column('date_added', DateTime)
+    settings = Column('settings ', LargeBinary)
 
     roles = relationship("Role", back_populates='servers', cascade="all, delete, delete-orphan")
 
@@ -38,9 +45,9 @@ class Servers(Base):
 class Role(Base):
     __tablename__ = 'role'
 
-    server_id = Column('Server ID', String(20), ForeignKey('servers.server_id'))
-    role_id = Column('Role ID', String(20), primary_key=True)
-    perms_object = Column('Permissions Object', LargeBinary)
+    server_id = Column('server_id', String(20), ForeignKey('servers.server_id'))
+    role_id = Column('role_id', String(20), primary_key=True)
+    perms_object = Column('perms_object', LargeBinary)
     servers = relationship("Servers", back_populates='roles')
 
     def __repr__(self):
@@ -51,11 +58,11 @@ class Role(Base):
 class Custom_command(Base):
     __tablename__ = 'custom_command'
 
-    server_id = Column('Server ID', String(20), ForeignKey('servers.server_id'))
-    command_id = Column('Command ID', Integer, primary_key=True)
-    command_name = Column('Command Name', String(64))
-    output_object = Column('Output Object', LargeBinary)
-    help_text = Column('Help Text', String(32))
+    server_id = Column('server_id', String(20), ForeignKey('servers.server_id'))
+    command_id = Column('command_id', Integer, primary_key=True)
+    command_name = Column('command_name', String(64))
+    output_object = Column('output_objectt', LargeBinary)
+    help_text = Column('help_text', String(32))
 
     def __repr__(self):
         return [self.server_id, self.command_name, pickle.loads(self.output_object), self.help_text]
@@ -63,12 +70,23 @@ class Custom_command(Base):
 
 # Quotes table
 class Quote(Base):
-    __tablename__ = 'quote'
+    __tablename__ = 'bot_admins'
 
-    server_id = Column('Server ID', String(20), ForeignKey('servers.server_id'))
-    quote_id = Column('Quote ID', Integer, primary_key=True)
-    text = Column('Text', String(1500))
-    help_text = Column('Help Text', String(32))
+    user_id = Column('server_id', String(20), ForeignKey('servers.server_id'))
+    quote_id = Column('quote_id', Integer, primary_key=True)
+    text = Column('text', String(1500))
+
+    def __repr__(self):
+        return [self.server_id, self.command_name, pickle.loads(self.output_object), self.help_text]
+
+
+class BotAdmins(Base):
+    __tablename__ = 'bot_admins'
+
+    user_id = Column('server_id', String(20), primary_key=True)
+    roles = Column('roles', LargeBinary)
+    admin_since = Column('admin_since', DateTime)
+    made_admin_by = Column('made_admin_by', String(20))
 
     def __repr__(self):
         return [self.server_id, self.command_name, pickle.loads(self.output_object), self.help_text]
@@ -187,3 +205,5 @@ def GetServerRoles(user, server):
         user_roles.append('administrators')
 
     return user_roles
+
+def SetBotAdmin(user, granting_user):
