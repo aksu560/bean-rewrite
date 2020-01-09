@@ -67,7 +67,7 @@ class Custom_command(Base):
 
 # Quotes table
 class Quote(Base):
-    __tablename__ = 'bot_admins'
+    __tablename__ = 'quote'
 
     user_id = Column('server_id', String(20), ForeignKey('servers.server_id'))
     quote_id = Column('quote_id', Integer, primary_key=True)
@@ -85,7 +85,7 @@ class BotAdmins(Base):
     made_admin_by = Column('made_admin_by', String(20))
 
     def __repr__(self):
-        return [self.server_id, self.command_name, pickle.loads(self.output_object), self.help_text]
+        return [self.user_id, self.admin_since, self.made_admin_by]
 
 
 Base.metadata.create_all(engine)
@@ -93,14 +93,6 @@ Session.configure(bind=engine)
 
 db = Session()
 db.commit()
-
-bot_admins = []
-for result in db.query(BotAdmins):
-    bot_admins.append(result.user_id)
-print(f"Bot admins are: {str(bot_admins)}")
-
-if bot_owner_id not in bot_admins:
-    BotAdmins.user_id
 
 
 # Function for adding new servers to the table. Returns True if successful.
@@ -223,8 +215,17 @@ def AddBotAdmin(granted_user_id, granter_id):
     print(f"New admin {granted_user_id} added by {granter_id}")
 
 
+bot_admins = []
+for result in db.query(BotAdmins):
+    bot_admins.append(result.user_id)
+print(f"Bot admins are: {str(bot_admins)}")
+
+if bot_owner_id not in bot_admins:
+    AddBotAdmin(bot_owner_id)
+
+
 # Remove a bot level administrator
-def AddBotAdmin(removed_id, remover_id):
+def RemoveBotAdmin(removed_id, remover_id):
     for result in db.query(BotAdmins).filter(BotAdmins.user_id == removed_id):
         db.delete(result)
         print(f"Admin {removed_id} removed by {remover_id}")
