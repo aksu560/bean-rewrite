@@ -55,6 +55,10 @@ async def on_guild_join(guild):
     print(f"Joined {guild.name}. Added to db.}")
     beanbase.AddServer(str(guild.id))
 
+@client.event
+async def on_guild_remove(guild):
+    beanbase.RemoveServer((str(guild.id)))
+
 
 
 client.run(clientKey)
