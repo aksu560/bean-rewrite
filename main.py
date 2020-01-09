@@ -12,14 +12,13 @@ handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w'
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-client = commands.AutoShardedBot(command_prefix="&")
+client = commands.AutoShardedBot(command_prefix="&", help_command=None)
 
 client.cfgParser = configparser.ConfigParser()
 auth = open(os.getcwd() + "/auth.ini")
 client.cfgParser.read_file(auth)
 clientKey = client.cfgParser.get("discord", "key")
 
-client.remove_command("help")
 
 client.allCogs = [
     "cogs.help",
