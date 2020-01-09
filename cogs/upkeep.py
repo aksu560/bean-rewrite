@@ -90,10 +90,18 @@ class Upkeep(commands.Cog):
 
     @commands.command()
     async def cr(self, ctx, target_func):
+        print(globals())
         output = "```py\n"
         output += inspect.getsource(globals()[target_func])
-        output += "```"
-        await ctx.send(output)
+        if len(output) > 2000:
+            texts = []
+            pos1 = output.find('\n', 1700, 1900)
+            texts.append(output[:pos1] + "```")
+            texts.append(f"```css\n{output[pos1:]}```")
+            for i in texts:
+                await ctx.send(i)
+        else:
+            await ctx.send(output + "```")
 
     @cr.error
     async def cr_eh(self, ctx, err: Exception):
