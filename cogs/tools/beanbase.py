@@ -8,7 +8,7 @@ from datetime import datetime
 
 # Replace the ID with your own
 bot_owner_id = "114796980739244032"
-print(f"Bot owner if: {bot_owner_id}")
+print(f"Bot owner is: {bot_owner_id}")
 
 Session = sessionmaker()
 
@@ -229,3 +229,10 @@ def RemoveBotAdmin(removed_id, remover_id):
     for result in db.query(BotAdmins).filter(BotAdmins.user_id == removed_id):
         db.delete(result)
         print(f"Admin {removed_id} removed by {remover_id}")
+
+
+def GetBotAdmins():
+    output = []
+    for result in db.query(BotAdmins):
+        output.append(result.user_id)
+    return output
