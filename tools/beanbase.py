@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, LargeBinary
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 import pickle
 from datetime import datetime
 
@@ -27,6 +27,8 @@ class Servers(Base):
     date_added = Column('Date server added the bot', DateTime)
     settings = Column('Settings', LargeBinary)
 
+    roles = relationship("Role", back_populats='servers', cascade="all, delete, delete-orphan")
+
     def __repr__(self):
         return [self.server_id, self.premium, self.date_added, pickle.loads(self.settings),
                 pickle.loads(self.settings)]
@@ -36,9 +38,10 @@ class Servers(Base):
 class Role(Base):
     __tablename__ = 'role'
 
-    server_id = Column('Server ID', String(17), primary_key=True)
-    role_id = Column('Role ID', String(17))
+    server_id = Column('Server ID', String(20), primary_key=True)
+    role_id = Column('Role ID', String(20))
     perms_object = Column('Permissions Object', LargeBinary)
+    servers = relationship("Servers", back_populats='roles')
 
     def __repr__(self):
         return [self.server_id, self.role_id, pickle.loads(self.perms_object)]
@@ -48,7 +51,7 @@ class Role(Base):
 class Custom_command(Base):
     __tablename__ = 'custom_command'
 
-    server_id = Column('Server ID', String(17), primary_key=True)
+    server_id = Column('Server ID', String(20), primary_key=True)
     command_name = Column('Command Name', String(64))
     output_object = Column('Output Object', LargeBinary)
     help_text = Column('Help Text', String(32))
@@ -61,7 +64,7 @@ class Custom_command(Base):
 class Quote(Base):
     __tablename__ = 'quote'
 
-    server_id = Column('Server ID', String(17), primary_key=True)
+    server_id = Column('Server ID', String(20), primary_key=True)
     quote_id = Column('Quote ID', Integer)
     text = Column('Text', String(1500))
     help_text = Column('Help Text', String(32))
