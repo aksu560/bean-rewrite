@@ -98,13 +98,13 @@ class Upkeep(commands.Cog):
             texts = []
             while looping:
                 pos1 = output.find('\n', 1700, 1900)
-                texts.append(output[:pos1] + "```")
-                texts.append(f"```py\n{output[pos1:]}```")
-                print(f"{len(''.join(texts))} > {len(output)}")
-                if len(''.join(texts)) >= len(output):
+                texts.append()
+                output = output[pos1:]
+
+                if len(output) < 1996:
                     looping = False
 
-            print(texts)
+            print(len(texts))
             for i in texts:
                 await ctx.send(i)
         else:
