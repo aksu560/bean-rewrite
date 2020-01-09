@@ -17,9 +17,10 @@ class Help(commands.Cog):
             for cog in self.client.allCogs:
                 commandsText += f".{cog[4:]}\n"
         else:
-            targetcogobject = self.client.get_cog(targetcog)
+            targetcogobject = self.client.get_cog(targetcog.capitalize())
             if targetcogobject is None:
                 await ctx.send(f"{targetcog} was not found :c")
+                return
             commandsText = f"Here are all the commands in {targetcogobject.qualified_name}```css"
 
             for command in targetcogobject.get_commands():
