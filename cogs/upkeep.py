@@ -95,8 +95,8 @@ class Upkeep(commands.Cog):
         output += inspect.getsource(globals()[target_func])
         if len(output) > 2000:
             looping = True
+            texts = []
             while looping:
-                texts = []
                 pos1 = output.find('\n', 1000, 1900)
                 texts.append(output[:pos1] + "```")
                 texts.append(f"```py\n{output[pos1:]}```")
