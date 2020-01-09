@@ -38,7 +38,7 @@ class Servers(Base):
 class Role(Base):
     __tablename__ = 'role'
 
-    server_id = Column('Server ID', String(20), primary_key=True)
+    server_id = Column('Server ID', String(20), ForeignKey('servers.server_id'))
     role_id = Column('Role ID', String(20))
     perms_object = Column('Permissions Object', LargeBinary)
     servers = relationship("Servers", back_populates='roles')
@@ -51,7 +51,7 @@ class Role(Base):
 class Custom_command(Base):
     __tablename__ = 'custom_command'
 
-    server_id = Column('Server ID', String(20), primary_key=True)
+    server_id = Column('Server ID', String(20), ForeignKey('servers.server_id'))
     command_name = Column('Command Name', String(64))
     output_object = Column('Output Object', LargeBinary)
     help_text = Column('Help Text', String(32))
@@ -64,7 +64,7 @@ class Custom_command(Base):
 class Quote(Base):
     __tablename__ = 'quote'
 
-    server_id = Column('Server ID', String(20), primary_key=True)
+    server_id = Column('Server ID', String(20), ForeignKey('servers.server_id'))
     quote_id = Column('Quote ID', Integer)
     text = Column('Text', String(1500))
     help_text = Column('Help Text', String(32))
