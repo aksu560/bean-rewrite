@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, LargeBinary
 from sqlalchemy.ext.declarative import declarative_base
 import sqlalchemy_utils as db_utils
 from sqlalchemy import create_engine
@@ -24,7 +24,7 @@ class Servers(Base):
     server_id = Column(String(17), primary_key=True)
     server_premium = Column('Premium Server', Boolean)
     server_announce = Column('Announcements enabled', Boolean)
-    disabled_commands = Column('Disabled Commands', String(10000))
+    disabled_commands = Column('Disabled Commands', LargeBinary)
 
     def __repr__(self):
         return [self.server_id, self.server_premium, self.server_announce, pickle.loads(self.disabled_commands)]
@@ -47,6 +47,7 @@ def AddServer(server_id):
 
 
 # Function for querying a server from the table
+#
 def GetServer(server_id):
     for queryresult in db.query(Servers).filter(server_id == server_id):
         return [queryresult.server_id,
