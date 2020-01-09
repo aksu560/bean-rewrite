@@ -97,7 +97,7 @@ class Upkeep(commands.Cog):
             looping = True
             while looping:
                 texts = []
-                pos1 = output.find('\n', 1700, 1900)
+                pos1 = output.find('\n', 1000, 1900)
                 texts.append(output[:pos1] + "```")
                 texts.append(f"```py\n{output[pos1:]}```")
                 print(f"{len(''.join(texts))} > {len(output)}")
