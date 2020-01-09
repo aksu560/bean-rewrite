@@ -89,3 +89,4 @@ def GetAllServers():
     output = []
     for queryresult in db.query(Servers):
         output.append(queryresult.server_id)
+    return output
