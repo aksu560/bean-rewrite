@@ -10,7 +10,7 @@ class Upkeep(commands.Cog):
 
     def cog_check(self, ctx):
         print(f"configuration command used by {ctx.author} in {ctx.channel.name}:{ctx.guild.name}")
-        server_roles = beanbase.GetServerRoles(ctx.author.id, ctx.server.id)
+        server_roles = beanbase.GetServerRoles(ctx.author.id, ctx.guild.id)
         if not server_roles:
             return False
         if ctx.author.guild_permissions.administrator or 'administrator' in server_roles:
