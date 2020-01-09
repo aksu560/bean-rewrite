@@ -1,7 +1,7 @@
 from discord.ext import commands
 import sys
 import os
-from .perms import server_admin
+from ..tools import beanbase
 
 
 class Upkeep(commands.Cog):
@@ -9,7 +9,12 @@ class Upkeep(commands.Cog):
         self.client = client
 
     def cog_check(self, ctx):
-        return server_admin.isServerAdmin()
+        print(f"configuration command used by {ctx.author} in {ctx.channel.name}:{ctx.guild.name}")
+        if ctx.author.guild_permissions.administrator or 'administrator' in beanbase.GetServerRoles(ctx.author,
+                                                                                                    ctx.author):
+            return True
+        else:
+            return False
 
     @commands.command()
     async def Reload(self, ctx):
