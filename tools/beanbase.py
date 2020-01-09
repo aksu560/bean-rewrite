@@ -111,9 +111,77 @@ def RemoveServer(wanted_server_id):
     return False
 
 
+def GetServerSettings(server):
+    for queryresult in db.query(Servers).filter(Servers.server_id == server):
+        return pickle.loads(queryresult.settings)
+
+
 # Function for retrieving all servers from the servers table. Returns a list object with server IDs
 def GetAllServers():
     output = []
     for queryresult in db.query(Servers):
         output.append(queryresult.server_id)
     return output
+
+
+# Add a bot admin for the server. Returns True if user was added, False if the user was already an admin and
+# None if server was not found
+def SetServerAdmin(user, server):
+    server_settings = {}
+    serverresult = None
+    for queryresult in db.query(Servers).filter(Servers.server_id == server):
+        serverresult = queryresult
+        server_settings = pickle.loads(serverresult.settings)
+
+    if serverresult:
+
+        if 'administrators' in server_settings:
+            if user not in server_settings['administrators']:
+                server_settings['administrators'].append(user)
+                serverresult.settings = pickle.dumps(server_settings)
+                db.commit()
+                return True
+            else:
+                return False
+        else:
+            server_settings['administrators'] = [user]
+            serverresult.settings = pickle.dumps(server_settings)
+            db.commit()
+            return True
+    else:
+        return None
+
+
+# Remove a bot admin for the server. Returns True if user was removed, False if the user was not an admin and
+# None if server was not found
+def RemoveServerAdmin(user, server):
+    server_settings = {}
+    serverresult = None
+    for queryresult in db.query(Servers).filter(Servers.server_id == server):
+        serverresult = queryresult
+        server_settings = pickle.loads(serverresult.settings)
+
+    if serverresult:
+
+        if 'administrators' in server_settings:
+            if user in server_settings['administrators']:
+                server_settings['administrators'].remove(user)
+                serverresult.settings = pickle.dumps(server_settings)
+                db.commit()
+                return True
+            else:
+                return False
+        else:
+            return False
+    else:
+        return None
+
+
+# Get all roles for a user in server. Returns a list of all the users roles
+def GetServerRoles(user, server):
+    user_roles = []
+    server_settings = GetServerSettings(server)
+    if user in server_settings['administrators']:
+        user_roles.append('administrators')
+
+    return user_roles

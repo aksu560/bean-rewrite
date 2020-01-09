@@ -1,11 +1,15 @@
 from discord.ext import commands
 import sys
 import os
+from .perms import server_admin
 
 
 class Upkeep(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
+
+    def cog_check(self, ctx):
+        return server_admin.isServerAdmin()
 
     @commands.command()
     async def Reload(self, ctx):

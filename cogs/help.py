@@ -15,7 +15,7 @@ class Help(commands.Cog):
                            f" help with individual commands```css\n"
 
             for cog in self.client.allCogs:
-                commandsText += f".{cog[4:]}\n"
+                commandsText += f"{cog[4:]}\n"
         else:
             targetcogobject = self.client.get_cog(targetcog.capitalize())
             if targetcogobject is None:
