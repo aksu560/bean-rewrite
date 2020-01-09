@@ -90,9 +90,8 @@ class Upkeep(commands.Cog):
 
     @commands.command()
     async def cr(self, ctx, target_func):
-        print(globals())
         output = "```py\n"
-        output += inspect.getsource(globals()[target_func])
+        output += inspect.getsource(eval(target_func))
         if len(output) > 2000:
             looping = True
             texts = []
