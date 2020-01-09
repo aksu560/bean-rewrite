@@ -2,15 +2,15 @@ import discord
 from discord.ext import commands
 import configparser
 import os
+from tools import beanbase
 
-client = discord.Client()
+client = commands.AutoShardedBot(command_prefix="&")
 
 client.cfgParser = configparser.ConfigParser()
 auth = open(os.getcwd() + "/auth.ini")
 client.cfgParser.read_file(auth)
 clientKey = client.cfgParser.get("discord", "key")
 
-client = commands.Bot(command_prefix="&")
 
 client.allCogs = [
     "cogs.upkeep",
@@ -32,6 +32,9 @@ async def on_ready():
     print(f"-- Connected to {len(client.guilds)} servers:")
     for server in client.guilds:
         print(f":: {server.name}")
+        if beanbase.GetServer(str(server.id)) is None:
+            print("-Server not found in database, server added.")
+            beanbase.AddServer(str(server.id))
 
     print("==== Boot Success! ====")
 
