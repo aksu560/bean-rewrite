@@ -5,6 +5,7 @@ import os
 from tools import beanbase
 import logging
 
+
 logger = logging.getLogger('discord')
 logger.setLevel(logging.WARNING)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
@@ -18,8 +19,10 @@ auth = open(os.getcwd() + "/auth.ini")
 client.cfgParser.read_file(auth)
 clientKey = client.cfgParser.get("discord", "key")
 
+client.remove_command("help")
 
 client.allCogs = [
+    "cogs.help",
     "cogs.upkeep"
 ]
 
