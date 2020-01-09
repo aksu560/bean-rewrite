@@ -8,7 +8,7 @@ from datetime import datetime
 import configparser
 import os
 
-auth = open(os.getcwd() + "../../auth.ini")
+auth = open(os.getcwd() + "/auth.ini")
 configparser.ConfigParser().read_file(auth)
 bot_owner_id = configparser.ConfigParser().get("bot_owner", "id")
 print(f"Bot owner if: {bot_owner_id}")
