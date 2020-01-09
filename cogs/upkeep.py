@@ -97,15 +97,15 @@ class Upkeep(commands.Cog):
             looping = True
             texts = []
             while looping:
-                pos1 = output.find('\n', 1000, 1900)
+                pos1 = output.find('\n', 1700, 1900)
                 texts.append(output[:pos1] + "```")
                 texts.append(f"```py\n{output[pos1:]}```")
                 print(f"{len(''.join(texts))} > {len(output)}")
                 if len(''.join(texts)) >= len(output):
                     looping = False
 
+            print(texts)
             for i in texts:
-                print(i)
                 await ctx.send(i)
         else:
             await ctx.send(output + "```")
