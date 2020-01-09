@@ -13,7 +13,7 @@ class Upkeep(commands.Cog):
         print(f"configuration command used by {ctx.author} in {ctx.channel.name}:{ctx.guild.name}")
         bot_admins = beanbase.GetBotAdmins()
         print(f"{ctx.author.id} in {str(bot_admins)}")
-        return ctx.author.id in bot_admins
+        return str(ctx.author.id) in bot_admins
 
 
     @commands.command()
