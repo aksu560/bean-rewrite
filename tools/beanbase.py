@@ -71,7 +71,6 @@ def TogglePremium(wanted_server_id):
 def ToggleAnnouncements(wanted_server_id):
     for queryresult in db.query(Servers).filter(Servers.server_id == wanted_server_id):
         targetvalue = None
-        if targetvalue:
         targetvalue = not queryresult.server_announce
         queryresult.server_premium = targetvalue
         db.commit()
