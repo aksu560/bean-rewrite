@@ -23,7 +23,7 @@ class Servers(Base):
     __tablename__ = 'servers'
 
     server_id = Column('server_id', String(20), primary_key=True)
-    server_level = Column('server_level', )
+    server_level = Column('server_level', Integer)
     date_added = Column('Date server added the bot', DateTime)
     settings = Column('Settings', LargeBinary)
 
@@ -84,7 +84,7 @@ db.commit()
 # Function for adding new servers to the table. Returns True if successful.
 def AddServer(server_id):
     db.add(Servers(server_id=server_id,
-                   server_level=False,
+                   server_level=1,
                    date_added=datetime.now(),
                    settings=pickle.dumps({})))
     db.commit()
