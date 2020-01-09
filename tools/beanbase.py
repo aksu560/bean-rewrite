@@ -27,7 +27,7 @@ class Servers(Base):
     date_added = Column('Date server added the bot', DateTime)
     settings = Column('Settings', LargeBinary)
 
-    roles = relationship("Role", back_populats='servers', cascade="all, delete, delete-orphan")
+    roles = relationship("Role", back_populates='servers', cascade="all, delete, delete-orphan")
 
     def __repr__(self):
         return [self.server_id, self.premium, self.date_added, pickle.loads(self.settings),
@@ -41,7 +41,7 @@ class Role(Base):
     server_id = Column('Server ID', String(20), primary_key=True)
     role_id = Column('Role ID', String(20))
     perms_object = Column('Permissions Object', LargeBinary)
-    servers = relationship("Servers", back_populats='roles')
+    servers = relationship("Servers", back_populates='roles')
 
     def __repr__(self):
         return [self.server_id, self.role_id, pickle.loads(self.perms_object)]
