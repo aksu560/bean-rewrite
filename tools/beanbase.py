@@ -22,7 +22,7 @@ Base = declarative_base()
 class Servers(Base):
     __tablename__ = 'servers'
 
-    server_id = Column('Server ID', String(17), primary_key=True)
+    server_id = Column('Server ID', String(20), primary_key=True)
     premium = Column('Premium Server', Boolean)
     date_added = Column('Date server added the bot', DateTime)
     settings = Column('Settings', LargeBinary)
