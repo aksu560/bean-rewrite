@@ -1,3 +1,5 @@
+import inspect
+
 from discord.ext import commands
 import discord
 import sys
@@ -10,7 +12,7 @@ class Upkeep(commands.Cog):
         self.client = client
 
     def cog_check(self, ctx):
-        print(f"configuration command used by {ctx.author} in {ctx.channel.name}:{ctx.guild.name}")
+        print(f"Upkeep command used by {ctx.author} in {ctx.channel.name}:{ctx.guild.name}")
         bot_admins = beanbase.GetBotAdmins()
         print(f"{ctx.author.id} in {str(bot_admins)}")
         return str(ctx.author.id) in bot_admins
@@ -70,7 +72,7 @@ class Upkeep(commands.Cog):
         """Add new bot administrator"""
         success = beanbase.RemoveBotAdmin(str(removed_admin.id), str(ctx.author.id))
         if success:
-            await ctx.send(f"User' <@{removed_admin.id}> bot level administrative rights have been revoked.")
+            await ctx.send(f"User <@{removed_admin.id}> bot level administrative rights have been revoked.")
         else:
             await ctx.send(f"User <@{removed_admin.id}> is not a bot level administrator.")
 
@@ -85,6 +87,17 @@ class Upkeep(commands.Cog):
     async def Sep(self, ctx):
         """Just sends some separating lines to the server console. Used for debugging"""
         print("-------")
+
+    @commands.command():
+    async def cr(self, ctx, target_func):
+        output = "```py\n"
+        output += inspect.getsource(globals()[target_func])
+        output += "```"
+        await ctx.send(output)
+
+    @cr.error
+    async def cr_eh(self, ctx, err: Exception):
+        await ctx.send(f"```{str(err)}```")
 
 
 def setup(client: commands.Bot):
