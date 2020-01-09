@@ -229,6 +229,7 @@ if bot_owner_id not in bot_admins:
 def RemoveBotAdmin(removed_id, remover_id):
     for result in db.query(BotAdmins).filter(BotAdmins.user_id == removed_id):
         db.delete(result)
+        db.commit()
         print(f"Admin {removed_id} removed by {remover_id}")
         return True
     return False
