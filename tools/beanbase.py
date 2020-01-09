@@ -44,6 +44,7 @@ def AddServer(server_id):
                    server_announce=False,
                    disabled_commands=pickle.dumps([])))
     db.commit()
+    return True
 
 
 # Function for querying a server from the table
@@ -70,6 +71,7 @@ def TogglePremium(wanted_server_id):
 def ToggleAnnouncements(wanted_server_id):
     for queryresult in db.query(Servers).filter(Servers.server_id == wanted_server_id):
         targetvalue = None
+        if targetvalue:
         targetvalue = not queryresult.server_announce
         queryresult.server_premium = targetvalue
         db.commit()
@@ -80,3 +82,11 @@ def RemoveServer(wanted_server_id):
     for queryresult in db.query(Servers).filter(Servers.server_id == wanted_server_id):
         db.delete(queryresult)
         db.commit()
+        return True
+    return False
+
+def GetAllServers():
+    output = []
+    for queryresult in db.query(Servers):
+        output.append(queryresult)
+    return output
