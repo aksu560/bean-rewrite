@@ -29,7 +29,7 @@ class Servers(Base):
     server_id = Column('server_id', String(20), primary_key=True)
     server_level = Column('server_level', Integer)
     date_added = Column('date_added', DateTime)
-    settings = Column('settings ', LargeBinary)
+    settings = Column('settings', LargeBinary)
 
     roles = relationship("Role", back_populates='servers', cascade="all, delete, delete-orphan")
 
