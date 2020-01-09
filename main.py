@@ -13,6 +13,7 @@ handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)
 
 client = commands.AutoShardedBot(command_prefix="&", help_command=None)
+client.remove_command("help")
 
 client.cfgParser = configparser.ConfigParser()
 auth = open(os.getcwd() + "/auth.ini")
