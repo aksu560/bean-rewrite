@@ -88,7 +88,7 @@ class Upkeep(commands.Cog):
         """Just sends some separating lines to the server console. Used for debugging"""
         print("-------")
 
-    @commands.command():
+    @commands.command()
     async def cr(self, ctx, target_func):
         output = "```py\n"
         output += inspect.getsource(globals()[target_func])
