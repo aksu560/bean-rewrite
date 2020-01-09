@@ -23,7 +23,7 @@ class Servers(Base):
     __tablename__ = 'servers'
 
     server_id = Column('server_id', String(20), primary_key=True)
-    server_level = Column('premiu', )
+    server_level = Column('server_level', )
     date_added = Column('Date server added the bot', DateTime)
     settings = Column('Settings', LargeBinary)
 
