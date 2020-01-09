@@ -22,15 +22,15 @@ Base = declarative_base()
 class Servers(Base):
     __tablename__ = 'servers'
 
-    server_id = Column('Server ID', String(20), primary_key=True)
-    premium = Column('Premium Server', Boolean)
+    server_id = Column('server_id', String(20), primary_key=True)
+    server_level = Column('premiu', )
     date_added = Column('Date server added the bot', DateTime)
     settings = Column('Settings', LargeBinary)
 
     roles = relationship("Role", back_populates='servers', cascade="all, delete, delete-orphan")
 
     def __repr__(self):
-        return [self.server_id, self.premium, self.date_added, pickle.loads(self.settings),
+        return [self.server_id, self.server_level, self.date_added, pickle.loads(self.settings),
                 pickle.loads(self.settings)]
 
 
@@ -84,7 +84,7 @@ db.commit()
 # Function for adding new servers to the table. Returns True if successful.
 def AddServer(server_id):
     db.add(Servers(server_id=server_id,
-                   premium=False,
+                   server_level=False,
                    date_added=datetime.now(),
                    settings=pickle.dumps({})))
     db.commit()
@@ -92,24 +92,14 @@ def AddServer(server_id):
 
 
 # Function for querying a server entry from the servers table. Returns a list object
-# [server_id: str, premium: bool, ], or None if server was not found from the table.
+# [server_id: str, server_level: bool, ], or None if server was not found from the table.
 def GetServer(wanted_server_id):
     for queryresult in db.query(Servers).filter(Servers.server_id == wanted_server_id):
         return [queryresult.server_id,
-                queryresult.premium,
+                queryresult.server_level,
                 queryresult.date_added,
                 pickle.loads(queryresult.settings)]
     return None
-
-
-# Function for toggling premium on a server. Returns the value after toggling if successful, None if not.
-def TogglePremium(wanted_server_id):
-    for queryresult in db.query(Servers).filter(Servers.server_id == wanted_server_id):
-        targetvalue = None
-        targetvalue = not queryresult.premium
-        queryresult.premium = targetvalue
-        db.commit()
-        return targetvalue
 
 
 # Function for removing a server entry from the database. Returns True if removal was successful, False if not.
