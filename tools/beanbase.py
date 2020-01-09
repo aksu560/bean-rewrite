@@ -48,8 +48,8 @@ def AddServer(server_id):
 
 # Function for querying a server from the table
 #
-def GetServer(server_id):
-    for queryresult in db.query(Servers).filter(server_id == server_id):
+def GetServer(wanted_server_id):
+    for queryresult in db.query(Servers).filter(Servers.server_id == wanted_server_id):
         return [queryresult.server_id,
                 queryresult.server_premium,
                 queryresult.server_announce,
@@ -57,8 +57,9 @@ def GetServer(server_id):
 
 
 # Function for toggling premium on a server
-def TogglePremium(server_id):
-    for queryresult in db.query(Servers).filter(server_id == server_id):
+def TogglePremium(wanted_server_id):
+    for queryresult in db.query(Servers).filter(Servers.server_id == wanted_server_id):
+        targetvalue = None
         targetvalue = not queryresult.server_premium
         queryresult.server_premium = targetvalue
         db.commit()
@@ -66,15 +67,16 @@ def TogglePremium(server_id):
 
 
 # Function for toggling announcements on a server
-def ToggleAnnouncements(server_id):
-    for queryresult in db.query(Servers).filter(server_id == server_id):
+def ToggleAnnouncements(wanted_server_id):
+    for queryresult in db.query(Servers).filter(Servers.server_id == wanted_server_id):
+        targetvalue = None
         targetvalue = not queryresult.server_announce
         queryresult.server_premium = targetvalue
         db.commit()
         return targetvalue
 
 
-def RemoveServer(server_id):
-    for queryresult in db.query(Servers).filter(server_id == server_id):
+def RemoveServer(wanted_server_id):
+    for queryresult in db.query(Servers).filter(Servers.server_id == wanted_server_id):
         db.delete(queryresult)
         db.commit()
