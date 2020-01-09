@@ -13,7 +13,7 @@ class Upkeep(commands.Cog):
         server_roles = beanbase.GetServerRoles(ctx.author.id, ctx.guild.id)
         if not server_roles:
             return False
-        if ctx.author.guild_permissions.administrator or 'administrator' in server_roles:
+        if ctx.author.guild_permissions.administrator or 'administrators' in server_roles:
             return True
         else:
             return False

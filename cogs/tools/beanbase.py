@@ -181,6 +181,8 @@ def RemoveServerAdmin(user, server):
 def GetServerRoles(user, server):
     user_roles = []
     server_settings = GetServerSettings(server)
+    if server_settings is None:
+        return None
     if user in server_settings['administrators']:
         user_roles.append('administrators')
 
