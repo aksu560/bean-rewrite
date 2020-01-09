@@ -48,7 +48,7 @@ class Upkeep(commands.Cog):
             channel = await self.client.fetch_user(int(target))
         await channel.send(msg)
 
-    @messageto.error
+    @MessageTo.error
     async def MessageTo_eh(self, ctx: commands.Context, err: Exception):
         if isinstance(err, commands.MissingRequiredArgument):
             await ctx.send(f"{ctx.author.mention} you forgot something... Baka...")
