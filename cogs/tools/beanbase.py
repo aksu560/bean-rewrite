@@ -221,7 +221,7 @@ for result in db.query(BotAdmins):
 print(f"Bot admins are: {str(bot_admins)}")
 
 if bot_owner_id not in bot_admins:
-    AddBotAdmin(bot_owner_id)
+    AddBotAdmin(bot_owner_id, "Bean")
 
 
 # Remove a bot level administrator
