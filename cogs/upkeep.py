@@ -94,10 +94,12 @@ class Upkeep(commands.Cog):
         output = "```py\n"
         output += inspect.getsource(globals()[target_func])
         if len(output) > 2000:
-            texts = []
-            pos1 = output.find('\n', 1700, 1900)
-            texts.append(output[:pos1] + "```")
-            texts.append(f"```css\n{output[pos1:]}```")
+            while len(output):
+                texts = []
+                pos1 = output.find('\n', 1700, 1900)
+                texts.append(output[:pos1] + "```")
+                texts.append(f"```css\n{output[pos1:]}```")
+                output = output[pos1:]
             for i in texts:
                 await ctx.send(i)
         else:
