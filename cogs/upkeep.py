@@ -12,7 +12,7 @@ class Upkeep(commands.Cog):
         print(f"configuration command used by {ctx.author} in {ctx.channel.name}:{ctx.guild.name}")
         server_roles = beanbase.GetServerRoles(ctx.author.id, ctx.guild.id)
         if not server_roles:
-            return False
+            return ctx.author.guild_permissions.administrator
         if ctx.author.guild_permissions.administrator or 'administrators' in server_roles:
             return True
         else:
