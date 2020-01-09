@@ -105,6 +105,7 @@ class Upkeep(commands.Cog):
                     looping = False
 
             for i in texts:
+                print(i)
                 await ctx.send(i)
         else:
             await ctx.send(output + "```")
