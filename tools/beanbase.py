@@ -39,7 +39,7 @@ class Role(Base):
     __tablename__ = 'role'
 
     server_id = Column('Server ID', String(20), ForeignKey('servers.server_id'))
-    role_id = Column('Role ID', String(20))
+    role_id = Column('Role ID', String(20), primary_key=True)
     perms_object = Column('Permissions Object', LargeBinary)
     servers = relationship("Servers", back_populates='roles')
 
