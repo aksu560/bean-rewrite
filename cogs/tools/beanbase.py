@@ -84,7 +84,6 @@ class BotAdmins(Base):
     __tablename__ = 'bot_admins'
 
     user_id = Column('server_id', String(20), primary_key=True)
-    roles = Column('roles', LargeBinary)
     admin_since = Column('admin_since', DateTime)
     made_admin_by = Column('made_admin_by', String(20))
 
@@ -97,6 +96,14 @@ Session.configure(bind=engine)
 
 db = Session()
 db.commit()
+
+bot_admins = []
+for result in db.query(BotAdmins):
+    bot_admins.append(result.user_id)
+print(f"Bot admins are: {str(bot_admins)}")
+
+if bot_owner_id not in bot_admins:
+    BotAdmins.user_id
 
 
 # Function for adding new servers to the table. Returns True if successful.
@@ -206,4 +213,21 @@ def GetServerRoles(user, server):
 
     return user_roles
 
-def SetBotAdmin(user, granting_user):
+
+# Add a new bot level administrator
+def AddBotAdmin(granted_user_id, granter_id):
+    for result in db.query(BotAdmins):
+        if result.user_id == granted_user_id:
+            return False
+
+    new_admin = BotAdmins(user_id=granted_user_id, admin_since=datetime.now(), made_admin_by=granter_id)
+    db.add(new_admin)
+    db.commit()
+    print(f"New admin {granted_user_id} added by {granter_id}")
+
+
+# Remove a bot level administrator
+def AddBotAdmin(removed_id, remover_id):
+    for result in db.query(BotAdmins).filter(BotAdmins.user_id == removed_id):
+        db.delete(result)
+        print(f"Admin {removed_id} removed by {remover_id}")
