@@ -12,12 +12,8 @@ class Upkeep(commands.Cog):
     def cog_check(self, ctx):
         print(f"configuration command used by {ctx.author} in {ctx.channel.name}:{ctx.guild.name}")
         bot_admins = beanbase.GetBotAdmins()
-        if not bot_admins:
-            return ctx.author.guild_permissions.administrator
-        if ctx.author.guild_permissions.administrator or 'administrators' in bot_admins:
-            return True
-        else:
-            return False
+        return ctx.author in bot_admins
+
 
     @commands.command()
     async def Reload(self, ctx):
@@ -45,11 +41,10 @@ class Upkeep(commands.Cog):
         await ctx.send("Restarting.")
         os.execv(sys.executable, ['python3'] + sys.argv)
 
-
     @commands.command()
     async def Die(self, ctx):
         """Kill the bot"""
-        await ctx.send("Time for me to die :<")
+        await ctx.send("Time for me to die :c")
         exit()
 
     @commands.command(brief="[channel/user ID] [message]")
@@ -63,12 +58,11 @@ class Upkeep(commands.Cog):
     @commands.command(brief="[tag someone]")
     async def AddBotAdmin(self, ctx, new_admin: discord.Member):
         """Add new bot administrator"""
-        success = beanbase.AddBotAdmin(str(new_admin.id),str(ctx.author.id))
+        success = beanbase.AddBotAdmin(str(new_admin.id), str(ctx.author.id))
         if success:
             await ctx.send(f"User <@{new_admin.id}> added as a bot level administrator.")
         else:
             await ctx.send(f"User <@{new_admin.id}> is already a bot level administrator.")
-
 
     @commands.command(brief="[tag someone]")
     async def RemoveBotAdmin(self, ctx, removed_admin: discord.Member):
@@ -78,7 +72,6 @@ class Upkeep(commands.Cog):
             await ctx.send(f"User' <@{removed_admin.id}> bot level administrative rights have been revoked.")
         else:
             await ctx.send(f"User <@{removed_admin.id}> is not a bot level administrator.")
-
 
     @MessageTo.error
     async def MessageTo_eh(self, ctx: commands.Context, err: Exception):
