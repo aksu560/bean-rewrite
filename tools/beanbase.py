@@ -52,6 +52,7 @@ class Custom_command(Base):
     __tablename__ = 'custom_command'
 
     server_id = Column('Server ID', String(20), ForeignKey('servers.server_id'))
+    command_id = Column('Command ID', Integer, primary_key=True)
     command_name = Column('Command Name', String(64))
     output_object = Column('Output Object', LargeBinary)
     help_text = Column('Help Text', String(32))
@@ -65,7 +66,7 @@ class Quote(Base):
     __tablename__ = 'quote'
 
     server_id = Column('Server ID', String(20), ForeignKey('servers.server_id'))
-    quote_id = Column('Quote ID', Integer)
+    quote_id = Column('Quote ID', Integer, primary_key=True)
     text = Column('Text', String(1500))
     help_text = Column('Help Text', String(32))
 
