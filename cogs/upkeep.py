@@ -1,4 +1,6 @@
 from discord.ext import commands
+import sys
+import os
 
 
 class Upkeep(commands.Cog):
@@ -24,6 +26,13 @@ class Upkeep(commands.Cog):
         reloadMessage += "```"
         reloadMessage += "**Something's wrong!**" if failedOne == True else ""
         await ctx.send(reloadMessage)
+
+    @commands.command()
+    async def restart(self, ctx):
+        """Restart the bot"""
+        await ctx.send("Restarting.")
+        os.execv(sys.executable, ['python3'] + sys.argv)
+
 
     @commands.command()
     async def die(self, ctx):
