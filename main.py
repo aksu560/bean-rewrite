@@ -57,6 +57,7 @@ async def on_guild_join(guild):
 
 @client.event
 async def on_guild_remove(guild):
+    print(f"Left {guild.name}. Removed from db")
     beanbase.RemoveServer((str(guild.id)))
 
 
