@@ -12,7 +12,7 @@ class Upkeep(commands.Cog):
     def cog_check(self, ctx):
         print(f"configuration command used by {ctx.author} in {ctx.channel.name}:{ctx.guild.name}")
         bot_admins = beanbase.GetBotAdmins()
-        return ctx.author in bot_admins
+        return ctx.author.id in bot_admins
 
 
     @commands.command()
