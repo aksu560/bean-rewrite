@@ -12,11 +12,15 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |v|
     v.memory = 4096
     end
+   config.vm.provision "shell",
+    inline: "sudo apt update"
   config.vm.provision "shell",
-    path: "provision/mysql.sh"
+    path: "provision/postgresql.sh"
   config.vm.provision "shell",
     path: "provision/python.sh"
-  config.vm.provision "shell",
-    path: "provision/launch.sh"
 
+  if ENV['BEAN_ENV'] != 'dev'
+    config.vm.provision "shell",
+      path: "provision/launch.sh"
+    end
 end

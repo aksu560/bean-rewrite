@@ -13,10 +13,10 @@ print(f"Bot owner is: {bot_owner_id}")
 Session = sessionmaker()
 
 # Create the database if it does not exist
-if not database_exists('mysql://root:root@localhost/beanbase'):
-    create_database('mysql://root:root@localhost/beanbase')
+if not database_exists('postgresql://postgres:root@localhost/beanbase'):
+    create_database('postgresql://postgres:root@localhost/beanbase')
 
-engine = create_engine('mysql://root:root@localhost/beanbase')
+engine = create_engine('postgresql://postgres:root@localhost/beanbase')
 
 # Declaring the base class for declarative structures
 Base = declarative_base()
