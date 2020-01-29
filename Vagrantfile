@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
     v.memory = 4096
     end
   config.vm.provision "shell",
-    path: "provision/mysql.sh"
+    path: "provision/postgresql.sh"
   config.vm.provision "shell",
     path: "provision/python.sh"
   config.vm.provision "shell",
