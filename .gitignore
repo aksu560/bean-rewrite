@@ -1,2 +1,4 @@
 .idea/
 auth.ini
+venv/
+**__pycache__/

@@ -17,7 +17,6 @@ class Upkeep(commands.Cog):
         print(f"{ctx.author.id} in {str(bot_admins)}")
         return str(ctx.author.id) in bot_admins
 
-
     @commands.command()
     async def Reload(self, ctx):
         """Reload all the cogs"""
@@ -87,31 +86,6 @@ class Upkeep(commands.Cog):
     async def Sep(self, ctx):
         """Just sends some separating lines to the server console. Used for debugging"""
         print("-------")
-
-    @commands.command()
-    async def cr(self, ctx, target_func):
-        output = "```py\n"
-        output += inspect.getsource(eval(target_func))
-        if len(output) > 2000:
-            looping = True
-            texts = []
-            while looping:
-                pos1 = output.find('\n', 1700, 1900)
-                texts.append(output[:pos1] + "```")
-                output = "```py\n" + output[pos1:]
-
-                if len(output) < 1990:
-                    looping = False
-
-            print(len(texts))
-            for i in texts:
-                await ctx.send(i)
-        else:
-            await ctx.send(output + "```")
-
-    @cr.error
-    async def cr_eh(self, ctx, err: Exception):
-        await ctx.send(f"```{str(err)}```")
 
 
 def setup(client: commands.Bot):

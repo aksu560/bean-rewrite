@@ -175,20 +175,19 @@ def RemoveServerAdmin(user, server):
         serverresult = queryresult
         server_settings = pickle.loads(serverresult.settings)
 
-    if serverresult:
-
-        if 'administrators' in server_settings:
-            if user in server_settings['administrators']:
-                server_settings['administrators'].remove(user)
-                serverresult.settings = pickle.dumps(server_settings)
-                db.commit()
-                return True
-            else:
-                return False
-        else:
-            return False
-    else:
+    if not serverresult:
         return None
+
+    if not 'administrators' in server_settings:
+        return False
+
+    if not user in server_settings['administrators']:
+        return False
+
+    server_settings['administrators'].remove(user)
+    serverresult.settings = pickle.dumps(server_settings)
+    db.commit()
+    return True
 
 
 # Get all roles for a user in server. Returns a list of all the users roles
