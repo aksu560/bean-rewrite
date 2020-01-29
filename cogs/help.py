@@ -11,7 +11,7 @@ class Help(commands.Cog):
         """Is a very helpful command"""
 
         if targetcog == "":
-            commandsText = f"Here are all the cogs available, please use &help [cogname] for" \
+            commandsText = f"Here are all the cogs available, please use &Help [cogname] for" \
                            f" help with individual commands```css\n"
 
             for cog in self.client.allCogs:
