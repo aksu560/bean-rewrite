@@ -18,7 +18,9 @@ Vagrant.configure("2") do |config|
     path: "provision/postgresql.sh"
   config.vm.provision "shell",
     path: "provision/python.sh"
-  config.vm.provision "shell",
-    path: "provision/launch.sh"
 
+  if ENV['BEAN_ENV'] != 'dev'
+    config.vm.provision "shell",
+      path: "provision/launch.sh"
+    end
 end
