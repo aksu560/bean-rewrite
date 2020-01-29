@@ -13,8 +13,8 @@ print(f"Bot owner is: {bot_owner_id}")
 Session = sessionmaker()
 
 # Create the database if it does not exist
-if not database_exists('postgresql://root:root@localhost/beanbase'):
-    create_database('postgresql://root:root@localhost/beanbase')
+if not database_exists('postgresql://postgres@localhost/beanbase'):
+    create_database('postgresql://postgres@localhost/beanbase')
 
 engine = create_engine('postgresql://root:root@localhost/beanbase')
 
