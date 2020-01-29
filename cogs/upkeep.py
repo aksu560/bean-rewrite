@@ -89,7 +89,12 @@ class Upkeep(commands.Cog):
     @commands.command()
     async def Backup(self, ctx):
         """Back up the database"""
-        subprocess.call("tools/backup.sh", shell=True)
+        subprocess.call("/vagrant/tools/backup.sh", shell=True)
+        await ctx.send("Backup created")
+
+    @Backup.error
+    async def Backup_eh(self, ctx: commands.Context, err: Exception):
+        await ctx.send(f"Something failed\n```{str(err)}```")
 
 
 def setup(client: commands.Bot):
