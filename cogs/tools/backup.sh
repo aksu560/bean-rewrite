@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd /vagrant
+mkdir -p db_backup
+sudo -u postgres pg_dump beanbase > db_backup/beanbase.bak
+cd db_backup
+mv beanbase.bak beanbase-$(date '+%Y%m%d%H%M').bak
