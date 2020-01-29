@@ -89,7 +89,7 @@ class Upkeep(commands.Cog):
     @commands.command()
     async def Backup(self, ctx):
         """Back up the database"""
-        subprocess.call("/vagrant/tools/backup.sh", shell=True)
+        subprocess.run("/vagrant/cogs/tools/backup.sh", shell=True)
         await ctx.send("Backup created")
 
     @Backup.error
