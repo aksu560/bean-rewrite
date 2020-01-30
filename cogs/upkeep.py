@@ -2,7 +2,6 @@ from discord.ext import commands
 import discord
 import sys
 import os
-import subprocess
 from .tools import beanbase
 
 
@@ -89,7 +88,7 @@ class Upkeep(commands.Cog):
     @commands.command()
     async def Backup(self, ctx):
         """Back up the database"""
-        subprocess.run("/vagrant/cogs/tools/backup.sh", shell=True)
+        beanbase.Backup()
         await ctx.send("Backup created")
 
     @Backup.error
