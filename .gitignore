@@ -2,3 +2,4 @@
 auth.ini
 venv/
 **__pycache__/
+db_backup/

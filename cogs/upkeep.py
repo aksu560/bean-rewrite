@@ -1,5 +1,3 @@
-import inspect
-
 from discord.ext import commands
 import discord
 import sys
@@ -86,6 +84,16 @@ class Upkeep(commands.Cog):
     async def Sep(self, ctx):
         """Just sends some separating lines to the server console. Used for debugging"""
         print("-------")
+
+    @commands.command()
+    async def Backup(self, ctx):
+        """Back up the database"""
+        beanbase.Backup()
+        await ctx.send("Backup created")
+
+    @Backup.error
+    async def Backup_eh(self, ctx: commands.Context, err: Exception):
+        await ctx.send(f"Something failed\n```{str(err)}```")
 
 
 def setup(client: commands.Bot):

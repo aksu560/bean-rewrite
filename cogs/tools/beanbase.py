@@ -4,6 +4,7 @@ from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, relationship
 import pickle
+import subprocess
 from datetime import datetime
 
 # Replace the ID with your own
@@ -239,3 +240,7 @@ def GetBotAdmins():
     for result in db.query(BotAdmins):
         output.append(result.user_id)
     return output
+
+
+def Backup():
+    subprocess.run("/vagrant/cogs/tools/backup.sh", shell=True)
