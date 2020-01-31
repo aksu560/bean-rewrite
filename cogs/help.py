@@ -12,15 +12,18 @@ class Help(commands.Cog):
     async def Help(self, ctx, targetcog: str = ""):
         """Is a very helpful command"""
 
+        restrictedCogs = ["cogs.Upkeep"]
+
         if targetcog == "":
             commandsText = f"Here are all the cogs available, please use &Help [cogname] for" \
                            f" help with individual commands```css\n"
 
             for cog in self.client.allCogs:
-                if cog == "cogs.upkeep":
-                    if ctx.author in beanbase.GetBotAdmins():
+                if cog in restrictedCogs:
+                    if ctx.author.id in beanbase.GetBotAdmins():
                         commandsText += f"{cog[4:]}\n"
                     else:
+                        print("User not authorized")
                         continue
                 else:
                     commandsText += f"{cog[4:]}\n"
