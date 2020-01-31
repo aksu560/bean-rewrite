@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from discord.ext import commands
 
+from cogs.tools import beanbase
+
 
 class Help(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -15,7 +17,13 @@ class Help(commands.Cog):
                            f" help with individual commands```css\n"
 
             for cog in self.client.allCogs:
-                commandsText += f"{cog[4:]}\n"
+                if cog == "cogs.upkeep":
+                    if ctx.author in beanbase.GetBotAdmins():
+                        commandsText += f"{cog[4:]}\n"
+                    else:
+                        continue
+                else:
+                    commandsText += f"{cog[4:]}\n"
         else:
             targetcogobject = self.client.get_cog(targetcog.capitalize())
             if targetcogobject is None:
