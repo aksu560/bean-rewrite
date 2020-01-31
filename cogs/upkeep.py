@@ -18,6 +18,7 @@ class Upkeep(commands.Cog):
     @commands.command()
     async def Reload(self, ctx):
         """Reload all the cogs"""
+        beanbase.Backup()
         reloadMessage = "Reloading cogs:```css\n"
         failedOne = False
 
@@ -44,6 +45,7 @@ class Upkeep(commands.Cog):
     @commands.command()
     async def Die(self, ctx):
         """Kill the bot"""
+        beanbase.Backup()
         await ctx.send("Time for me to die :c")
         exit()
 

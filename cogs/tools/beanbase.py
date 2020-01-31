@@ -242,5 +242,6 @@ def GetBotAdmins():
     return output
 
 
+# Back up the database
 def Backup():
     subprocess.run("/vagrant/cogs/tools/backup.sh", shell=True)
