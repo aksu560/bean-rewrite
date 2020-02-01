@@ -12,7 +12,7 @@ class Help(commands.Cog):
     async def Help(self, ctx, targetcog: str = ""):
         """Is a very helpful command"""
 
-        restrictedCogs = ["cogs.Upkeep"]
+        restrictedCogs = ["cogs.upkeep"]
 
         if targetcog == "":
             commandsText = f"Here are all the cogs available, please use &Help [cogname] for" \
