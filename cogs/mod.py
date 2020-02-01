@@ -93,9 +93,9 @@ class Mod(commands.Cog):
             await ctx.send("Something went wrong")
 
     @commands.command(brief="[Read the help text]")
-    async def NukeQuotes(self, ctx, confirmation: str):
+    async def NukeQuotes(self, ctx, *, confirmation: str):
         """Deletes all Quotes"""
-        if confirmation != ctx.guild.name:
+        if confirmation is None or confirmation != ctx.guild.name:
             await ctx.send("This command deletes all the quotes from the server. It has 2 safeguards built in. 1. "
                            "you have to give the name of the server as an argument for the command, and 2. It "
                            "dumps a list of all the ld quotes before deleting anything.")
