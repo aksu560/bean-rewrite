@@ -27,13 +27,13 @@ class Help(commands.Cog):
                 else:
                     commandsText += f"{cog[4:]}\n"
         else:
+            if targetcog.lower() in restrictedCogs and str(ctx.author.id) not in beanbase.GetBotAdmins():
+                await ctx.send(">:c")
+                return
+
             targetcogobject = self.client.get_cog(targetcog.capitalize())
             if targetcogobject is None:
                 await ctx.send(f"{targetcog} was not found :c")
-                return
-
-            if targetcogobject in restrictedCogs and str(ctx.author.id) not in beanbase.GetBotAdmins():
-                await ctx.send(">:c")
                 return
             commandsText = f"Here are all the commands in {targetcogobject.qualified_name}```css"
 
