@@ -4,7 +4,6 @@ import os
 from cogs.tools import beanbase
 import logging
 
-
 logger = logging.getLogger('discord')
 logger.setLevel(logging.WARNING)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
@@ -18,7 +17,6 @@ client.cfgParser = configparser.ConfigParser()
 auth = open(os.getcwd() + "/auth.ini")
 client.cfgParser.read_file(auth)
 clientKey = client.cfgParser.get("discord", "key")
-
 
 client.allCogs = [
     "cogs.help",
@@ -53,16 +51,26 @@ async def on_ready():
 async def on_message(msg):
     await client.process_commands(msg)
 
+
 @client.event
 async def on_guild_join(guild):
     print(f"Joined {guild.name}. Added to db.")
     beanbase.AddServer(str(guild.id))
+
 
 @client.event
 async def on_guild_remove(guild):
     print(f"Left {guild.name}. Removed from db")
     beanbase.RemoveServer((str(guild.id)))
 
+
+@client.check
+async def run_custom_commands(ctx):
+    for cog in client.allCogs:
+        for command in cog.get_commands():
+            if command.name.capitalize() == ctx.command.name:
+                print("This is not a custom command")
+    return True
 
 
 client.run(clientKey)
