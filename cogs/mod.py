@@ -18,9 +18,11 @@ class Mod(commands.Cog):
         """Add a custom command for the server"""
         server_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
         server_level = beanbase.GetServer(str(ctx.guild.id))["level"]
+        print(command)
 
         if " " in command:
             await ctx.send("No spaces in command names. How do I know whats the command,a nd what's the argument then?")
+            return
 
         if server_commands:
 
