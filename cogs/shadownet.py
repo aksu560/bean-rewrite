@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import random
 import urllib
 from urllib.error import HTTPError
 from discord.ext import commands
@@ -135,6 +136,46 @@ class Shadownet(commands.Cog):
                     jobListing += f"<{listableJob.url}>\n\n"
 
                 await ctx.send(jobListing)
+
+    @commands.command(brief="[Item]")
+    async def illegal(self, ctx: commands.Context, *, item: str = ""):
+        """Checks for legality of the specified thing"""
+
+        async with ctx.channel.typing():
+
+            if item == "":
+                await self.client.reply(
+                    "You do need to specify what to look for ya dumb dumb. If you were looking just "
+                    "for the wiki page, here ya go <https://shadownet.run/Illegal_Things>")
+                return
+
+            address = "https://shadownet.run/Illegal_Things"
+
+            fp = urllib.request.urlopen(str(address))
+            mybytes = fp.read()
+            mystr = mybytes.decode("utf8")
+            fp.close()
+            pq = PyQuery(mystr)
+
+            table = pq("li")
+            output = ""
+
+            for hit in table:
+                if fuzz.partial_ratio(str(hit.text).lower(), item.lower()) > 82:
+                    output = str(hit.text)
+                    break
+
+            if output is not "":
+                img = random.choice(["https://i.imgur.com/axlPKto.png", "https://i.kym-cdn.com/entries/icons/mobile/000/028/207/Screen_Shot_2019-01-17_at_4.22.43_PM.jpg"])
+                await ctx.send(
+                    f"{img}\n{output} is banned, sorry :c. Here is a link to the page of illegal things <{address}>")
+
+            else:
+                await ctx.send(f"{item} is cool! Here is a link to the page of illegal things <{address}>")
+
+    @illegal.error
+    async def illegal_eh(self, ctx: commands.Context, err):
+        await ctx.send("Ok, how? Something has gone terribly wrong here, please alert Aksu#1010")
 
 
 def setup(client: commands.Bot):
