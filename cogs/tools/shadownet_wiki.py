@@ -1,5 +1,5 @@
 import urllib
-import PyQuery
+from pyquery import PyQuery
 
 
 def GetWikiCharacters():

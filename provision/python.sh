@@ -5,5 +5,5 @@ pip3 install psycopg2
 pip3 install discord
 pip3 install sqlalchemy
 pip3 install sqlalchemy_utils
-pip3 install PyQuery
+pip3 install pyquery
 pip3 install fuzzywuzzy
