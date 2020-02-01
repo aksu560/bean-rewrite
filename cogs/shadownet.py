@@ -2,7 +2,7 @@
 import urllib
 from urllib.error import HTTPError
 from discord.ext import commands
-import PyQuery
+from pyquery import PyQuery
 from cogs.tools import shadownet_wiki
 from fuzzywuzzy import fuzz
 
