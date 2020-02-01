@@ -67,16 +67,16 @@ async def on_guild_remove(guild):
 @client.event
 async def on_command_error(ctx, error):
     print("I dunno?")
+    command_from_msg = ctx.message[1:]
     custom_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
-    await ctx.send(str(custom_commands))
     for command in custom_commands:
-        print(ctx.command.name + " vs " + command[1])
-        if ctx.command.name == command[1]:
-            print(ctx.command.name + " is " + command[1])
+        print(command_from_msg + " vs " + command[1])
+        if command_from_msg == command[1]:
+            print(command_from_msg + " is " + command[1])
             await ctx.send(command[2])
             return False
         else:
-            print(ctx.command.name + " is not " + command[1])
+            print(command_from_msg + " is not " + command[1])
 
 
 client.run(clientKey)
