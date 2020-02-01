@@ -117,6 +117,13 @@ def GetServer(wanted_server_id):
     return None
 
 
+def UpdateServerLevel(wanted_server_id, server_level):
+    for queryresult in db.query(Servers).filter(Servers.server_id == wanted_server_id):
+        queryresult.server_level = server_level
+        db.commit()
+    return None
+
+
 # Function for removing a server entry from the database. Returns True if removal was successful, False if not.
 def RemoveServer(wanted_server_id):
     for queryresult in db.query(Servers).filter(Servers.server_id == wanted_server_id):
