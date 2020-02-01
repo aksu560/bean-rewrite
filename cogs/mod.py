@@ -16,7 +16,7 @@ class Mod(commands.Cog):
     @commands.command()
     async def AddCommand(self, ctx, command: str, content: str, help: str):
         """Add a custom command for the server"""
-        server_commands = beanbase.GetCustomCommands(str(ctx.guid.id))
+        server_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
         server_level = beanbase.GetServer(str(ctx.guild.id))[2]
 
         if server_level < 2 and len(server_commands) > 10:
