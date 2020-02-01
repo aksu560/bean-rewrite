@@ -171,12 +171,12 @@ def SetServerAdmin(user, server):
 # None if server was not found
 def RemoveServerAdmin(user, server):
     server_settings = {}
-    serverresult = None
+    server_result = None
     for queryresult in db.query(Servers).filter(Servers.server_id == server):
-        serverresult = queryresult
-        server_settings = pickle.loads(serverresult.settings)
+        server_result = queryresult
+        server_settings = pickle.loads(server_result.settings)
 
-    if not serverresult:
+    if not server_result:
         return None
 
     if not 'administrators' in server_settings:
@@ -186,7 +186,7 @@ def RemoveServerAdmin(user, server):
         return False
 
     server_settings['administrators'].remove(user)
-    serverresult.settings = pickle.dumps(server_settings)
+    server_result.settings = pickle.dumps(server_settings)
     db.commit()
     return True
 
@@ -277,16 +277,10 @@ def GetCustomCommands(server):
 # Delete a custom command. Returns None if no commands were found, True if a command was deleted, or False if
 # specified command was not found
 def RemoveCustomCommand(server, command):
-    for query_result in db.query(Custom_command).filter(Custom_command.server_id == server):
-        command_result = query_result
-
-    if not command_result:
-        return None
-    updated_commands= []
-    for query_command in command_result:
-        if query_command.command_name == command:
-            db.delete(query_command)
-            db.commit()
-            return True
+    for query_result in db.query(Custom_command).filter(Custom_command.server_id == server and
+                                                        Custom_command.command_name == command):
+        db.delete(query_result)
+        db.commit()
+        return True
 
     return False
