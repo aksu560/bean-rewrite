@@ -277,11 +277,10 @@ def GetCustomCommands(server):
 # Delete a custom command. Returns None if no commands were found, True if a command was deleted, or False if
 # specified command was not found
 def RemoveCustomCommand(server, command):
-    for query_result in db.query(Custom_command).filter(Custom_command.server_id == server and
-                                                        Custom_command.command_name == command):
-        print(str(query_result))
-        db.delete(query_result)
-        db.commit()
-        return True
+    for query_result in db.query(Custom_command).filter(Custom_command.server_id == server):
+        if query_result.command_name == command:
+            db.delete(query_result)
+            db.commit()
+            return True
 
     return False
