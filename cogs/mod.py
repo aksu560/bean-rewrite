@@ -93,7 +93,7 @@ class Mod(commands.Cog):
             await ctx.send("Something went wrong")
 
     @commands.command(brief="[Read the help text]")
-    async def NukeQuotes(self, ctx, *, confirmation: str):
+    async def NukeQuotes(self, ctx, confirmation: str):
         """Deletes all Quotes"""
         if confirmation is None or confirmation != ctx.guild.name:
             await ctx.send("This command deletes all the quotes from the server. It has 2 safeguards built in. 1. "
@@ -107,8 +107,14 @@ class Mod(commands.Cog):
             file_buffer = io.StringIO('\n'.join(output_list))
             await ctx.send(file=discord.File(fp=file_buffer, filename=f"{ctx.guild.name}-quotes.txt"))
             for line in quotes:
-                beanbase.RemoveQuote(str(ctx.server.id), line[2])
+                beanbase.RemoveQuote(str(ctx.guild.id), line[2])
             await ctx.send("Quote's deleted")
+
+    @NukeQuotes.error
+    async def NukeQuotes_eh(self, ctx, err:Exception):
+        await ctx.send("This command deletes all the quotes from the server. It has 2 safeguards built in. 1. "
+                           "you have to give the name of the server as an argument for the command, and 2. It "
+                           "dumps a list of all the ld quotes before deleting anything.")
 
     @commands.command()
     async def RemoveCommand(self, ctx, command: str):
