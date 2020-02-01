@@ -107,7 +107,7 @@ class Example(commands.Cog):
         await ctx.send("You didn't specify a character to look for :c")
 
     @commands.command()
-    async def jobs(self, ctx):
+    async def Jobs(self, ctx):
         """View active jobs"""
 
         await ctx.send("This involves reddit stuff, so don't worry if it takes a while.")
