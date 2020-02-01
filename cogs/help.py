@@ -9,51 +9,49 @@ class Help(commands.Cog):
         self.client = client
 
     @commands.command()
-    async def Help(self, ctx, targetcog: str = ""):
+    async def Help(self, ctx, target_cog: str = ""):
         """Is a very helpful command"""
 
-        restrictedCogs = ["cogs.upkeep"]
+        restricted_cogs = ["cogs.upkeep"]
 
-        if targetcog == "":
-            commandsText = f"Here are all the cogs available, please use &Help [cogname] for" \
+        if target_cog == "":
+            commands_text = f"Here are all the cogs available, please use &Help [cogname] for" \
                            f" help with individual commands```css\n"
 
             for cog in self.client.allCogs:
-                if cog in restrictedCogs:
+                if cog in restricted_cogs:
                     if str(ctx.author.id) in beanbase.GetBotAdmins():
-                        commandsText += f"{cog[4:]}\n"
+                        commands_text += f"{cog[4:]}\n"
                     else:
                         continue
                 else:
-                    commandsText += f"{cog[4:]}\n"
+                    commands_text += f"{cog[4:]}\n"
         else:
-            if "cogs." + targetcog.lower() in restrictedCogs and str(ctx.author.id) not in beanbase.GetBotAdmins():
+            if "cogs." + target_cog.lower() in restricted_cogs and str(ctx.author.id) not in beanbase.GetBotAdmins():
                 await ctx.send(">:c")
                 return
-            else:
-                print(targetcog.lower() + " not in " + str(restrictedCogs))
 
-            targetcogobject = self.client.get_cog(targetcog.capitalize())
-            if targetcogobject is None:
-                await ctx.send(f"{targetcog} was not found :c")
+            target_cog_object = self.client.get_cog(target_cog.capitalize())
+            if target_cog_object is None:
+                await ctx.send(f"{target_cog} was not found :c")
                 return
-            commandsText = f"Here are all the commands in {targetcogobject.qualified_name}```css"
+            commands_text = f"Here are all the commands in {target_cog_object.qualified_name}```css"
 
-            for command in targetcogobject.get_commands():
-                commandsText += f"\n    &{command.name} "
-                commandsText += f"{command.brief} " if command.brief is not None else ""
-                commandsText += f"/* {command.help} */"
+            for command in target_cog_object.get_commands():
+                commands_text += f"\n    &{command.name} "
+                commands_text += f"{command.brief} " if command.brief is not None else ""
+                commands_text += f"/* {command.help} */"
 
         # Cuts the output to multiple messages if the output would go over Discord's character limit
-        if len(commandsText) > 2000:
+        if len(commands_text) > 2000:
             texts = []
-            pos1 = commandsText.find('\n', 1700, 1900)
-            texts.append(commandsText[:pos1] + "```")
-            texts.append(f"```css\n{commandsText[pos1:]}```")
+            pos1 = commands_text.find('\n', 1700, 1900)
+            texts.append(commands_text[:pos1] + "```")
+            texts.append(f"```css\n{commands_text[pos1:]}```")
             for i in texts:
                 await ctx.send(i)
         else:
-            await ctx.send(commandsText + "```")
+            await ctx.send(commands_text + "```")
 
 
 def setup(client: commands.Bot):
