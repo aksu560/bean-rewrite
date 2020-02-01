@@ -13,7 +13,7 @@ class Mod(commands.Cog):
     def cog_check(self, ctx):
         user = str(ctx.author.id)
         bot_admins = beanbase.GetBotAdmins()
-        server_admins = beanbase.GetServerAdmins()
+        server_admins = beanbase.GetServerAdmins(str(ctx.guild.id))
         return user in bot_admins or user in server_admins or ctx.author.permissions.administrator()
 
     @commands.command()
