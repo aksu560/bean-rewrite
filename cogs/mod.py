@@ -19,18 +19,20 @@ class Mod(commands.Cog):
         server_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
         server_level = beanbase.GetServer(str(ctx.guild.id))["level"]
 
-        if server_commands and server_level < 2 and len(server_commands) > 10:
-            await ctx.send("You are over your cap of 10 commands :c Sorry, but drive space isnt free.")
-            return
+        if server_commands:
 
-        if command in server_commands:
-            await ctx.send("Command already exists")
-            return
-
-        for command in self.client.commands:
-            if command.name.capitalize() == ctx.command.name:
-                await ctx.send("Command conflicts with a premade command")
+            if server_level < 2 and len(server_commands) > 10:
+                await ctx.send("You are over your cap of 10 commands :c Sorry, but drive space isnt free.")
                 return
+
+            if command in server_commands:
+                await ctx.send("Command already exists")
+                return
+
+            for command in self.client.commands:
+                if command.name.capitalize() == ctx.command.name:
+                    await ctx.send("Command conflicts with a premade command")
+                    return
 
         if beanbase.AddCustomCommand(ctx.guild.id, command.capitalize(), content, help):
             await ctx.send(f"Command &{command.capitalize()} has been added")
