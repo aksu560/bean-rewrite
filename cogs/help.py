@@ -23,7 +23,7 @@ class Help(commands.Cog):
                     if ctx.author.id in beanbase.GetBotAdmins():
                         commandsText += f"{cog[4:]}\n"
                     else:
-                        print("User not authorized")
+                        print(ctx.author.id + " not in " + beanbase.GetBotAdmins())
                         continue
                 else:
                     commandsText += f"{cog[4:]}\n"
