@@ -12,7 +12,9 @@ class Help(commands.Cog):
         """Is a very helpful command"""
 
         restricted_cogs = ["cogs.upkeep"]
+        mod_cogs = ["cogs.mod"]
         custom_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
+        bot_admins = beanbase.GetBotAdmins()
 
         if target_cog == "":
             commands_text = f"Here are all the cogs available, please use &Help [cogname] for" \
@@ -20,10 +22,13 @@ class Help(commands.Cog):
 
             for cog in self.client.allCogs:
                 if cog in restricted_cogs:
-                    if str(ctx.author.id) in beanbase.GetBotAdmins():
+                    if str(ctx.author.id) in bot_admins:
                         commands_text += f"{cog[4:]}\n"
                     else:
                         continue
+                elif cog in mod_cogs:
+                    if ctx.author.permissions.administrator() or str(ctx.author.id) in bot_admins:
+                        commands_text += f"{cog[4:]}\n"
                 else:
                     commands_text += f"{cog[4:]}\n"
 
