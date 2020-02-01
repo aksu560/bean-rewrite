@@ -27,7 +27,7 @@ class Help(commands.Cog):
                 else:
                     commandsText += f"{cog[4:]}\n"
         else:
-            if targetcog.lower() in restrictedCogs and str(ctx.author.id) not in beanbase.GetBotAdmins():
+            if "cogs." + targetcog.lower() in restrictedCogs and str(ctx.author.id) not in beanbase.GetBotAdmins():
                 await ctx.send(">:c")
                 return
             else:
