@@ -13,6 +13,8 @@ class Help(commands.Cog):
 
         restricted_cogs = ["cogs.upkeep"]
         mod_cogs = ["cogs.mod"]
+        limited_cogs = ["cogs.shadownet"]
+
         custom_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
         bot_admins = beanbase.GetBotAdmins()
         server_admins = beanbase.GetServerAdmins(str(ctx.guild.id))
@@ -32,10 +34,14 @@ class Help(commands.Cog):
                     else:
                         continue
                 elif cog in mod_cogs:
-
                     if ctx.author.guild_permissions.administrator or str(ctx.author.id) in bot_admins or \
                             str(ctx.author.id) in server_admins:
                         commands_text += f"{cog[4:]}\n"
+
+                elif cog in limited_cogs:
+                    if ctx.guild.id in cog.approved_guilds:
+                        commands_text += f"{cog[4:]}\n"
+
                 else:
                     commands_text += f"{cog[4:]}\n"
 

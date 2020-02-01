@@ -14,10 +14,11 @@ class Example(commands.Cog):
 
     def __init__(self, client: commands.Bot):
         self.client = client
+        self.approved_guilds = [160034813040918528, 438287744683474947]
 
     def cog_check(self, ctx):
-        approved_guilds = [160034813040918528, 438287744683474947]
-        return ctx.guild.id in approved_guilds
+
+        return ctx.guild.id in self.approved_guilds
 
     @commands.command(brief="[Character Name]")
     async def Character(self, ctx, input: str = None):
