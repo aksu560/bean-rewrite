@@ -15,7 +15,7 @@ class Mod(commands.Cog):
         bot_admins = beanbase.GetBotAdmins()
         if user in bot_admins:
             return True
-        if ctx.author.guild_permissions.administrator():
+        if ctx.author.guild_permissions.administrator:
             return True
         return False
 
