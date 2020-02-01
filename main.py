@@ -68,6 +68,8 @@ async def on_guild_remove(guild):
 async def on_command_error(ctx, error):
     command_from_msg = ctx.message.content[1:]
     custom_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
+    if custom_commands is None:
+        return
     for command in custom_commands:
         if command_from_msg == command[1]:
             await ctx.send(command[2])

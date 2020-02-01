@@ -274,6 +274,19 @@ def GetCustomCommands(server):
     return output
 
 
-# Delete a custom command
-def RemoveCustomCommand():
-    pass
+# Delete a custom command. Returns None if no commands were found, True if a command was deleted, or False if
+# specified command was not found
+def RemoveCustomCommand(server, command):
+    for query_result in db.query(Custom_command).filter(Custom_command.server_id == server):
+        command_result = query_result
+
+    if not command_result:
+        return None
+    updated_commands= []
+    for query_command in command_result:
+        if query_command.command_name == command:
+            db.delete(query_command)
+            db.commit()
+            return True
+
+    return False
