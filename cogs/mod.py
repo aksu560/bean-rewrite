@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from discord.ext import commands
+import discord
 
 from cogs.tools import beanbase
 
@@ -52,6 +53,7 @@ class Mod(commands.Cog):
 
     @commands.command()
     async def RemoveCommand(self, ctx, command: str):
+        """Remove a custom command"""
         response = beanbase.RemoveCustomCommand(str(ctx.guild.id), command.capitalize())
 
         if response is None:
@@ -60,6 +62,24 @@ class Mod(commands.Cog):
             await ctx.send(f"Custom Command {command.capitalize()} has been removed.")
         if response is False:
             await ctx.send(f"No custom command {command.capitalize()} found.")
+
+    @commands.command(brief="[tag someone]")
+    async def AddServerAdmin(self, ctx, new_admin: discord.Member):
+        """Add new server administrator"""
+        success = beanbase.AddServerAdmin(str(new_admin.id), str(ctx.author.id))
+        if success:
+            await ctx.send(f"User <@{new_admin.id}> added as a server level administrator.")
+        else:
+            await ctx.send(f"User <@{new_admin.id}> is already a server level administrator.")
+
+    @commands.command(brief="[tag someone]")
+    async def RemoveServerAdmin(self, ctx, removed_admin: discord.Member):
+        """Add new server administrator"""
+        success = beanbase.RemoveServerAdmin(str(removed_admin.id), str(ctx.author.id))
+        if success:
+            await ctx.send(f"User <@{removed_admin.id}> server level administrative rights have been revoked.")
+        else:
+            await ctx.send(f"User <@{removed_admin.id}> is not a server level administrator.")
 
 
 def setup(client: commands.Bot):
