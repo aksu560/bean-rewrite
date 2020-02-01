@@ -51,6 +51,7 @@ class Mod(commands.Cog):
         if beanbase.GetServer(str(ctx.guild.id))["level"] < 2:
             quote_amount = len(beanbase.GetQuotes(str(ctx.guild.id)))
             limit = 100-quote_amount
+            print(limit)
         count = 0
 
         for quote in file_request:
