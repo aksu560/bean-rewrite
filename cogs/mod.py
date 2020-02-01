@@ -25,6 +25,7 @@ class Mod(commands.Cog):
 
         if command in server_commands:
             await ctx.send("Command already exists")
+            return
 
         if beanbase.AddCustomCommand(ctx.guild.id, command, content, help):
             await ctx.send(f"Command &{command} has been added")

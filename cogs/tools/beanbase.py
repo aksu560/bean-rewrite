@@ -266,6 +266,8 @@ def GetCustomCommands(server):
     for queryresult in db.query(Custom_command).filter_by(server_id=server):
         output[queryresult.command_name] = {"output": queryresult.output_text,
                                             "help_text": queryresult.help_text}
+    if output == {}:
+        output = None
     return output
 
 
