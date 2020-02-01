@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from random import random
+import random
 from discord.ext import commands
 
 from cogs.tools import beanbase
