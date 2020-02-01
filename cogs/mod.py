@@ -58,7 +58,7 @@ class Mod(commands.Cog):
                 break
             beanbase.AddQuote(str(ctx.guild.id), str(ctx.author.display_name), quote)
             count += 1
-        await ctx.send(f"{len(count)} quotes added!")
+        await ctx.send(f"{count} quotes added!")
 
     @commands.command()
     async def AddCommand(self, ctx, command: str, content: str, help: str):
