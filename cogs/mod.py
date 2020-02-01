@@ -32,7 +32,7 @@ class Mod(commands.Cog):
         await ctx.send(file=discord.File(fp=file_buffer, filename=f"{ctx.guild.name}-quotes.txt"))
 
     @commands.command()
-    async def RemoveQuote(self, ctx, quote: str):
+    async def RemoveQuote(self, ctx, quote: int):
         """Remove a quote"""
 
         beanbase.RemoveQuote(str(ctx.guild.id), quote)

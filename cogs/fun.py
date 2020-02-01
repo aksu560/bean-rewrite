@@ -16,7 +16,7 @@ class Fun(commands.Cog):
         """Get a random quote"""
 
         quote = random.choice(beanbase.GetQuotes(str(ctx.guild.id)))
-        await ctx.send(f"{quote[0]}\nAdded by {quote[1]}")
+        await ctx.send(f"{quote[0]}\nAdded by {quote[1]}. Quote ID:{quote[2]}")
 
     @commands.command()
     async def AddQuote(self, ctx, quote: str):

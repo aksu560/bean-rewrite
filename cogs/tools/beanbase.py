@@ -261,17 +261,18 @@ def AddQuote(server, user, quote_text):
 
 
 # Remove a quote from the DB
-def RemoveQuote(server, quote_text):
-    for query_result in db.query(Quote).filter(Quote.server_id == server):
-        if query_result.text == quote_text:
+def RemoveQuote(server, quote):
+    for query_result in db.query(Quote).filter(Quote.quote_id == quote):
+        if query_result.server_id == server:
             db.delete(query_result)
             db.commit()
             return True
+        return False
 
 
 # Get all quotes from a particular server
 def GetQuotes(server):
     output = []
     for result in db.query(Quote).filter(Quote.server_id == server):
-        output.append([result.text, result.user])
+        output.append([result.text, result.user, result.quote_id])
     return output
