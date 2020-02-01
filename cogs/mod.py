@@ -19,6 +19,9 @@ class Mod(commands.Cog):
         server_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
         server_level = beanbase.GetServer(str(ctx.guild.id))["level"]
 
+        if " " in command:
+            await ctx.send("No spaces in command names. How do I know whats the command,a nd what's the argument then?")
+
         if server_commands:
 
             if server_level < 2 and len(server_commands) > 10:
