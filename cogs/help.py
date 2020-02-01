@@ -39,7 +39,7 @@ class Help(commands.Cog):
                         commands_text += f"{cog[4:]}\n"
 
                 elif cog in limited_cogs:
-                    if ctx.guild.id in cog.approved_guilds:
+                    if ctx.guild.id in self.client.get_cog(cog).approved_guilds:
                         commands_text += f"{cog[4:]}\n"
 
                 else:
