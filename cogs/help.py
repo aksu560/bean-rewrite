@@ -32,7 +32,7 @@ class Help(commands.Cog):
 
         else:
 
-            if target_cog.lower == "custom":
+            if target_cog.lower() == "custom":
                 if custom_commands is not None:
                     commands_text = f"Here are all the commands in Custom```css"
 
