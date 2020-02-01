@@ -19,7 +19,7 @@ class Mod(commands.Cog):
         server_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
         server_level = beanbase.GetServer(str(ctx.guild.id))["level"]
 
-        if server_level < 2 and len(server_commands) > 10:
+        if server_commands and server_level < 2 and len(server_commands) > 10:
             await ctx.send("You are over your cap of 10 commands :c Sorry, but drive space isnt free.")
             return
 
