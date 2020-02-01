@@ -4,10 +4,9 @@ from urllib.error import HTTPError
 from discord.ext import commands
 from pyquery import PyQuery
 from cogs.tools import shadownet_wiki
-from cogs.tools import reddit
+from cogs.tools.reddit import reddit
 from fuzzywuzzy import fuzz
 import math
-
 
 
 class Example(commands.Cog):
