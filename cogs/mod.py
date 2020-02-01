@@ -17,7 +17,7 @@ class Mod(commands.Cog):
     async def AddCommand(self, ctx, command: str, content: str, help: str):
         """Add a custom command for the server"""
         server_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
-        server_level = beanbase.GetServer(str(ctx.guild.id))[2]
+        server_level = beanbase.GetServer(str(ctx.guild.id))["level"]
 
         if server_level < 2 and len(server_commands) > 10:
             await ctx.send("You are over your cap of 10 commands :c Sorry, but drive space isnt free.")

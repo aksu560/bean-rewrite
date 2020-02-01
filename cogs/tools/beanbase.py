@@ -110,10 +110,10 @@ def AddServer(server_id):
 # [server_id: str, server_level: int, ], or None if server was not found from the table.
 def GetServer(wanted_server_id):
     for queryresult in db.query(Servers).filter(Servers.server_id == wanted_server_id):
-        return [queryresult.server_id,
-                queryresult.server_level,
-                queryresult.date_added,
-                pickle.loads(queryresult.settings)]
+        return {"id": queryresult.server_id,
+                "level": queryresult.server_level,
+                "date": queryresult.date_added,
+                "settings": pickle.loads(queryresult.settings)}
     return None
 
 
