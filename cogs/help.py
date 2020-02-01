@@ -25,7 +25,7 @@ class Help(commands.Cog):
             commands_text = f"Here are all the cogs available, please use &Help [cogname] for" \
                             f" help with individual commands```css\n"
 
-            for cog in self.client.allCogs:
+            for cog in self.client.allCvbaogs:
                 if cog in restricted_cogs:
                     if str(ctx.author.id) in bot_admins:
                         commands_text += f"{cog[4:]}\n"

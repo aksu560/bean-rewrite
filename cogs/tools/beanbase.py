@@ -32,7 +32,7 @@ class Servers(Base):
     date_added = Column('date_added', DateTime)
     settings = Column('settings', LargeBinary)
 
-    roles = relationship("Role", back_populates='servers', cascade="all, delete, delete-orphan")
+    admins = relationship("ServerAdmins", back_populates='servers', cascade="all, delete, delete-orphan")
 
     def __repr__(self):
         return [self.server_id, self.server_level, self.date_added, pickle.loads(self.settings),
@@ -45,7 +45,7 @@ class ServerAdmins(Base):
 
     server_id = Column('server_id', String(20), ForeignKey('servers.server_id'))
     user_id = Column('role_id', String(20), primary_key=True)
-    servers = relationship("Servers", back_populates='roles')
+    servers = relationship("Servers", back_populates='admins')
 
     def __repr__(self):
         return [self.server_id, self.user_id]
