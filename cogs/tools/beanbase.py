@@ -69,9 +69,10 @@ class CustomCommand(Base):
 class Quote(Base):
     __tablename__ = 'quote'
 
-    user_id = Column('server_id', String(20), ForeignKey('servers.server_id'))
-    quote_id = Column('quote_id', Integer, primary_key=True)
+    server_id = Column('server_id', String(20), ForeignKey('servers.server_id'))
+    quote_id = Column('quote_id', Integer, primary_key=True, autoincrement=True)
     text = Column('text', String(1500))
+    user = Column('user', String(35))
 
     def __repr__(self):
         return [self.server_id, self.command_name, pickle.loads(self.output_object), self.help_text]
@@ -227,7 +228,7 @@ def AddServerAdmin(server, granted_user_id):
         if result.user_id == granted_user_id:
             return False
 
-    new_admin = ServerAdmins(user_id=granted_user_id, admin_since=datetime.now(), made_admin_by=granter_id)
+    new_admin = ServerAdmins(server_id=server, user_id=granted_user_id)
     db.add(new_admin)
     db.commit()
     return True
@@ -248,4 +249,29 @@ def GetServerAdmins(server):
     output = []
     for result in db.query(ServerAdmins).filter(ServerAdmins.server_id == server):
         output.append(result.user_id)
+    return output
+
+
+# Add a new quote to the DB
+def AddQuote(server, user, quote_text):
+    new_quote = Quote(server_id=server, text=quote_text, user=user)
+    db.add(new_quote)
+    db.commit()
+    return True
+
+
+# Remove a quote from the DB
+def RemoveQuote(server, quote_text):
+    for query_result in db.query(Quote).filter(Quote.server_id == server):
+        if query_result.text == quote_text:
+            db.delete(query_result)
+            db.commit()
+            return True
+
+
+# Get all quotes from a particular server
+def GetQuotes(server):
+    output = []
+    for result in db.query(Quote).filter(Quote.server_id == server):
+        output.append([result.text, result.user])
     return output

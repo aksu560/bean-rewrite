@@ -20,8 +20,10 @@ clientKey = client.cfgParser.get("discord", "key")
 
 client.allCogs = [
     "cogs.help",
+    "cogs.fun",
     "cogs.upkeep",
-    "cogs.mod"
+    "cogs.mod",
+    "cogs.shadownet"
 ]
 
 
