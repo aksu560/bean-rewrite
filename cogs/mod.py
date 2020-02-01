@@ -2,6 +2,7 @@
 import io
 from discord.ext import commands
 import discord
+import requests
 
 from cogs.tools import beanbase
 
@@ -36,6 +37,20 @@ class Mod(commands.Cog):
 
         beanbase.RemoveQuote(str(ctx.guild.id), quote)
         await ctx.send("Quote Removed")
+
+    @RemoveQuote.error
+    async def RemoveQuote_eh(self, ctx, err: Exception):
+        await ctx.send("Something went wrong :c")
+
+    @commands.command(brief="attach a text file, each quote on a new line")
+    async def ImportQuotes(self, ctx):
+        attachment_url = ctx.message.attachments[0].url
+        file_request = requests.get(attachment_url)
+        count = 0
+        for quote in file_request:
+            beanbase.AddQuote(str(ctx.guild.id), str(ctx.author.display_name), quote)
+            count += 1
+        await ctx.send(f"{count} quotes added!")
 
     @commands.command()
     async def AddCommand(self, ctx, command: str, content: str, help: str):

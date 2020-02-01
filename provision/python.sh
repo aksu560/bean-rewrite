@@ -7,3 +7,4 @@ pip3 install sqlalchemy
 pip3 install sqlalchemy_utils
 pip3 install pyquery
 pip3 install fuzzywuzzy
+pip3 install requests
