@@ -227,7 +227,7 @@ def AddServerAdmin(server, granted_user_id):
         if result.user_id == granted_user_id:
             return False
 
-    new_admin = ServerAdmins(user_id=granted_user_id, admin_since=datetime.now(), made_admin_by=granter_id)
+    new_admin = ServerAdmins(server_id=server, user_id=granted_user_id)
     db.add(new_admin)
     db.commit()
     return True
