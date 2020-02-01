@@ -16,6 +16,18 @@ class Upkeep(commands.Cog):
         return str(ctx.author.id) in bot_admins
 
     @commands.command()
+    async def GiveBigBoiPants(self, ctx):
+        """Give the server that good shit"""
+        beanbase.UpdateServerLevel(str(ctx.guild.id), 2)
+        await ctx.send("Big Boi Pants given. Go to town!")
+
+    @commands.command()
+    async def TakeBigBoiPants(self, ctx):
+        """Take that good shit away"""
+        beanbase.UpdateServerLevel(str(ctx.guild.id), 1)
+        await ctx.send("Big Boi Pants removed. Cease!")
+
+    @commands.command()
     async def Reload(self, ctx):
         """Reload all the cogs"""
         beanbase.Backup()
