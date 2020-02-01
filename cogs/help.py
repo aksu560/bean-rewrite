@@ -13,7 +13,6 @@ class Help(commands.Cog):
 
         restricted_cogs = ["cogs.upkeep"]
         mod_cogs = ["cogs.mod"]
-        limited_cogs = ["cogs.shadownet"]
 
         custom_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
         bot_admins = beanbase.GetBotAdmins()
@@ -36,10 +35,6 @@ class Help(commands.Cog):
                 elif cog in mod_cogs:
                     if ctx.author.guild_permissions.administrator or str(ctx.author.id) in bot_admins or \
                             str(ctx.author.id) in server_admins:
-                        commands_text += f"{cog[4:]}\n"
-
-                elif cog in limited_cogs:
-                    if ctx.guild.id in self.client.get_cog(cog.capitalize()).approved_guilds:
                         commands_text += f"{cog[4:]}\n"
 
                 else:
