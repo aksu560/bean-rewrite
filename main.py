@@ -67,7 +67,7 @@ async def on_guild_remove(guild):
 @client.check
 async def run_custom_commands(ctx):
     for cog in client.allCogs:
-        for command in cog.get_commands():
+        for command in client.get_cog(cog.capitalize()).get_commands():
             if command.name.capitalize() == ctx.command.name:
                 print("This is not a custom command")
     return True
