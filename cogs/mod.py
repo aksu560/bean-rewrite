@@ -66,7 +66,7 @@ class Mod(commands.Cog):
     @commands.command(brief="[tag someone]")
     async def AddServerAdmin(self, ctx, new_admin: discord.Member):
         """Add new server administrator"""
-        success = beanbase.AddServerAdmin(str(new_admin.id), str(ctx.author.id))
+        success = beanbase.AddServerAdmin(str(ctx.guild.id), str(new_admin.id))
         if success:
             await ctx.send(f"User <@{new_admin.id}> added as a server level administrator.")
         else:
@@ -75,7 +75,7 @@ class Mod(commands.Cog):
     @commands.command(brief="[tag someone]")
     async def RemoveServerAdmin(self, ctx, removed_admin: discord.Member):
         """Add new server administrator"""
-        success = beanbase.RemoveServerAdmin(str(removed_admin.id), str(ctx.author.id))
+        success = beanbase.RemoveServerAdmin(str(ctx.guild.id), str(removed_admin.id))
         if success:
             await ctx.send(f"User <@{removed_admin.id}> server level administrative rights have been revoked.")
         else:
