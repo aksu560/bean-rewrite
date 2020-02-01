@@ -66,7 +66,6 @@ async def on_guild_remove(guild):
 
 @client.check
 async def run_custom_commands(ctx):
-
     for command in client.commands:
         if command.name.capitalize() == ctx.command.name:
             print("This is not a custom command")
@@ -77,7 +76,8 @@ async def run_custom_commands(ctx):
         if ctx.command.name == command[1]:
             await ctx.send(command[2])
             return False
-
+        else:
+            print(ctx.command.name + " is not " + command[1])
 
 
 client.run(clientKey)
