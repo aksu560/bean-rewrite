@@ -141,7 +141,7 @@ def GetAllServers():
 
 # Add a bot admin for the server. Returns True if user was added, False if the user was already an admin and
 # None if server was not found
-def SetServerAdmin(user, server):
+def AddServerAdmin(user, server):
     server_settings = {}
     serverresult = None
     for queryresult in db.query(Servers).filter(Servers.server_id == server):
@@ -172,8 +172,8 @@ def SetServerAdmin(user, server):
 def RemoveServerAdmin(user, server):
     server_settings = {}
     server_result = None
-    for queryresult in db.query(Servers).filter(Servers.server_id == server):
-        server_result = queryresult
+    for query_result in db.query(Servers).filter(Servers.server_id == server):
+        server_result = query_result
         server_settings = pickle.loads(server_result.settings)
 
     if not server_result:
@@ -189,6 +189,13 @@ def RemoveServerAdmin(user, server):
     server_result.settings = pickle.dumps(server_settings)
     db.commit()
     return True
+
+
+def GetServerAdmins():
+    output = []
+    for query_result in db.query(Servers).filter(Servers.server_id == server):
+        server_settings = pickle.loads(query_result.settings)
+        return server_settings['administrators']
 
 
 # Get all roles for a user in server. Returns a list of all the users roles

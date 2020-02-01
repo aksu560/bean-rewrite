@@ -11,8 +11,10 @@ class Mod(commands.Cog):
         self.client = client
 
     def cog_check(self, ctx):
+        user = str(ctx.author.id)
         bot_admins = beanbase.GetBotAdmins()
-        return str(ctx.author.id) in bot_admins
+        server_admins = beanbase.GetServerAdmins()
+        return user in bot_admins or user in server_admins or ctx.author.permissions.administrator()
 
     @commands.command()
     async def AddCommand(self, ctx, command: str, content: str, help: str):
