@@ -73,7 +73,9 @@ async def run_custom_commands(ctx):
 
     custom_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
     for command in custom_commands:
+        print(ctx.command.name + " vs " + command)
         if ctx.command.name == command[1]:
+            print(ctx.command.name + " is " + command[1])
             await ctx.send(command[2])
             return False
         else:
