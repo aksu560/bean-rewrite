@@ -57,13 +57,13 @@ class Custom_command(Base):
     __tablename__ = 'custom_command'
 
     server_id = Column('server_id', String(20), ForeignKey('servers.server_id'))
-    command_id = Column('command_id', Integer, primary_key=True)
+    command_id = Column('command_id', Integer, primary_key=True, autoincrement=True)
     command_name = Column('command_name', String(64))
-    output_object = Column('output_objectt', LargeBinary)
+    output_text = Column('output_text', String(1000))
     help_text = Column('help_text', String(32))
 
     def __repr__(self):
-        return [self.server_id, self.command_name, pickle.loads(self.output_object), self.help_text]
+        return [self.server_id, self.command_name, self.output_text, self.help_text]
 
 
 # Quotes table
@@ -107,13 +107,13 @@ def AddServer(server_id):
 
 
 # Function for querying a server entry from the servers table. Returns a list object
-# [server_id: str, server_level: bool, ], or None if server was not found from the table.
+# [server_id: str, server_level: int, ], or None if server was not found from the table.
 def GetServer(wanted_server_id):
     for queryresult in db.query(Servers).filter(Servers.server_id == wanted_server_id):
-        return [queryresult.server_id,
-                queryresult.server_level,
-                queryresult.date_added,
-                pickle.loads(queryresult.settings)]
+        return {"id": queryresult.server_id,
+                "level": queryresult.server_level,
+                "date": queryresult.date_added,
+                "settings": pickle.loads(queryresult.settings)}
     return None
 
 
@@ -137,70 +137,6 @@ def GetAllServers():
     for queryresult in db.query(Servers):
         output.append(queryresult.server_id)
     return output
-
-
-# Add a bot admin for the server. Returns True if user was added, False if the user was already an admin and
-# None if server was not found
-def SetServerAdmin(user, server):
-    server_settings = {}
-    serverresult = None
-    for queryresult in db.query(Servers).filter(Servers.server_id == server):
-        serverresult = queryresult
-        server_settings = pickle.loads(serverresult.settings)
-
-    if serverresult:
-
-        if 'administrators' in server_settings:
-            if user not in server_settings['administrators']:
-                server_settings['administrators'].append(user)
-                serverresult.settings = pickle.dumps(server_settings)
-                db.commit()
-                return True
-            else:
-                return False
-        else:
-            server_settings['administrators'] = [user]
-            serverresult.settings = pickle.dumps(server_settings)
-            db.commit()
-            return True
-    else:
-        return None
-
-
-# Remove a bot admin for the server. Returns True if user was removed, False if the user was not an admin and
-# None if server was not found
-def RemoveServerAdmin(user, server):
-    server_settings = {}
-    serverresult = None
-    for queryresult in db.query(Servers).filter(Servers.server_id == server):
-        serverresult = queryresult
-        server_settings = pickle.loads(serverresult.settings)
-
-    if not serverresult:
-        return None
-
-    if not 'administrators' in server_settings:
-        return False
-
-    if not user in server_settings['administrators']:
-        return False
-
-    server_settings['administrators'].remove(user)
-    serverresult.settings = pickle.dumps(server_settings)
-    db.commit()
-    return True
-
-
-# Get all roles for a user in server. Returns a list of all the users roles
-def GetServerRoles(user, server):
-    user_roles = []
-    server_settings = GetServerSettings(server)
-    if server_settings == {}:
-        return None
-    if user in server_settings['administrators']:
-        user_roles.append('administrators')
-
-    return user_roles
 
 
 # Add a new bot level administrator. Returns True if successful, False if not
@@ -245,3 +181,42 @@ def GetBotAdmins():
 # Back up the database
 def Backup():
     subprocess.run("/vagrant/cogs/tools/backup.sh", shell=True)
+
+
+# Add a custom command into the database
+def AddCustomCommand(server, command, content, help):
+    for result in db.query(Custom_command):
+        if result.command_name == command:
+            return False
+
+    new_command = Custom_command(server_id=server, command_name=command, output_text=content, help_text=help)
+    db.add(new_command)
+    db.commit()
+    print(f"New custom command {command}: {content} added for server {server}")
+    return True
+
+
+# Get all custom commands for specified server in format [[Command1 ID, Command1 name, Command1 Output,
+# Command1 Help], [Command2 ID]...]
+def GetCustomCommands(server):
+    output = []
+    for queryresult in db.query(Custom_command).filter_by(server_id=server):
+        output.append([queryresult.command_id,
+                       queryresult.command_name,
+                       queryresult.output_text,
+                       queryresult.help_text])
+    if not output:
+        output = None
+    return output
+
+
+# Delete a custom command. Returns None if no commands were found, True if a command was deleted, or False if
+# specified command was not found
+def RemoveCustomCommand(server, command):
+    for query_result in db.query(Custom_command).filter(Custom_command.server_id == server):
+        if query_result.command_name == command:
+            db.delete(query_result)
+            db.commit()
+            return True
+
+    return False
