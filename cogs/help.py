@@ -27,7 +27,7 @@ class Help(commands.Cog):
                     else:
                         continue
                 elif cog in mod_cogs:
-                    if ctx.author.permissions.administrator() or str(ctx.author.id) in bot_admins:
+                    if ctx.author.guild_permissions.administrator() or str(ctx.author.id) in bot_admins:
                         commands_text += f"{cog[4:]}\n"
                 else:
                     commands_text += f"{cog[4:]}\n"
