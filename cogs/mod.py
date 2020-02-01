@@ -14,7 +14,13 @@ class Mod(commands.Cog):
         user = str(ctx.author.id)
         bot_admins = beanbase.GetBotAdmins()
         server_admins = beanbase.GetServerAdmins(str(ctx.guild.id))
-        return user in bot_admins or user in server_admins or ctx.author.permissions.administrator()
+        if server_admins is not None and user in server_admins:
+            return True
+        if user in bot_admins:
+            return True
+        if ctx.author.permissions.administrator():
+            return True
+        return False
 
     @commands.command()
     async def AddCommand(self, ctx, command: str, content: str, help: str):
