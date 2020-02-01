@@ -4,7 +4,10 @@ from urllib.error import HTTPError
 from discord.ext import commands
 from pyquery import PyQuery
 from cogs.tools import shadownet_wiki
+from cogs.tools import reddit
 from fuzzywuzzy import fuzz
+import math
+
 
 
 class Example(commands.Cog):
@@ -102,6 +105,36 @@ class Example(commands.Cog):
     @Character.error
     async def character_eh(self, ctx: commands.Context, err: Exception):
         await ctx.send("You didn't specify a character to look for :c")
+
+    @commands.command()
+    async def jobs(self, ctx):
+        """View active jobs"""
+
+        await ctx.send("This involves reddit stuff, so don't worry if it takes a while.")
+
+        async with ctx.channel.typing():
+            jobs = []
+            for job in reddit.subreddit('shadownet').new(limit=None):
+                if job.link_flair_text == "Job - Open":
+                    jobs.append(job)
+            jobAnnounce = f"{len(jobs)} jobs found."
+            await ctx.send(jobAnnounce)
+
+            for i in range(math.ceil(len(jobs) / 5)):
+                jobListing = ""
+                for listableJob in jobs[i * 5: i * 5 + 5]:
+
+                    jobListing += f"{listableJob.title} by {listableJob.author.name}"
+
+                    userflair = listableJob.author_flair_text
+                    if userflair:
+                        jobListing += f" <{userflair}>\n"
+                    else:
+                        jobListing += "\n"
+
+                    jobListing += f"<{listableJob.url}>\n\n"
+
+                await ctx.send(jobListing)
 
 
 def setup(client: commands.Bot):
