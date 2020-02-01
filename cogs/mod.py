@@ -42,13 +42,15 @@ class Mod(commands.Cog):
     async def RemoveQuote_eh(self, ctx, err: Exception):
         await ctx.send("Something went wrong :c")
 
-    @commands.command(brief="attach a text file, each quote on a new line")
+    @commands.command(brief="[attach a text file, each quote on a new line]")
     async def ImportQuotes(self, ctx):
+        """Import quotes in bulk"""
         attachment_url = ctx.message.attachments[0].url
-        file_request = requests.get(attachment_url)
+        file_request = requests.get(attachment_url).text
         count = 0
         for quote in file_request:
-            beanbase.AddQuote(str(ctx.guild.id), str(ctx.author.display_name), quote)
+            print(quote)
+            # beanbase.AddQuote(str(ctx.guild.id), str(ctx.author.display_name), quote)
             count += 1
         await ctx.send(f"{count} quotes added!")
 
