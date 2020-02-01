@@ -70,7 +70,14 @@ async def run_custom_commands(ctx):
     for command in client.commands:
         if command.name.capitalize() == ctx.command.name:
             print("This is not a custom command")
-    return True
+            return True
+
+    custom_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
+    for command in custom_commands:
+        if ctx.command.name == command[1]:
+            await ctx.send(command[2])
+            return False
+
 
 
 client.run(clientKey)
