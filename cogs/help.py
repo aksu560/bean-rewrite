@@ -32,7 +32,7 @@ class Help(commands.Cog):
 
         else:
 
-            if target_cog.lower == "custom":
+            if target_cog.lower() == "custom":
                 if custom_commands is not None:
                     commands_text = f"Here are all the commands in {target_cog_object.qualified_name}```css"
 
@@ -53,7 +53,7 @@ class Help(commands.Cog):
                 await ctx.send(f"{target_cog} was not found :c")
                 return
 
-            commands_text = f"Here are all the commands in {target_cog_object.qualified_name}```css"
+            commands_text = f"Here are all the commands in Custom```css"
 
             for command in target_cog_object.get_commands():
                 commands_text += f"\n    &{command.name} "
