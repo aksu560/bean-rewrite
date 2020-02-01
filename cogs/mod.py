@@ -46,12 +46,19 @@ class Mod(commands.Cog):
     async def ImportQuotes(self, ctx):
         """Import quotes in bulk"""
         attachment_url = ctx.message.attachments[0].url
-        file_request = requests.get(attachment_url).text
+        file_request = requests.get(attachment_url).text.split('\n')
+        limit = None
+        if beanbase.GetServer(str(ctx.guild.id))["level"] < 2:
+            quote_amount = len(beanbase.GetQuotes(str(ctx.guild.id)))
+            limit = 100-quote_amount
         count = 0
-        for quote in file_request.split("\n"):
+
+        for quote in file_request:
+            if limit is not None and count <= limit:
+                break
             beanbase.AddQuote(str(ctx.guild.id), str(ctx.author.display_name), quote)
             count += 1
-        await ctx.send(f"{count} quotes added!")
+        await ctx.send(f"{len(count)} quotes added!")
 
     @commands.command()
     async def AddCommand(self, ctx, command: str, content: str, help: str):
