@@ -27,8 +27,9 @@ class Mod(commands.Cog):
         quotes = beanbase.GetQuotes(str(ctx.guild.id))
         for line in quotes:
             output_list.append(f"{line[0]} added by {line[1]}")
-        file_buffer = io.StringIO('\n'.join(output_list))
-        await ctx.send(file=file_buffer)
+        with open("quotes.txt") as file_buffer:
+            file_buffer = io.BufferedIOBase('\n'.join(output_list))
+            await ctx.send(file=file_buffer)
 
     @commands.command()
     async def RemoveQuote(self, ctx, quote: str):
