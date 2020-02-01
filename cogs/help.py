@@ -31,6 +31,10 @@ class Help(commands.Cog):
             if targetcogobject is None:
                 await ctx.send(f"{targetcog} was not found :c")
                 return
+
+            if targetcogobject in restrictedCogs and str(ctx.author.id) not in beanbase.GetBotAdmins():
+                await ctx.send(">:c")
+                return
             commandsText = f"Here are all the commands in {targetcogobject.qualified_name}```css"
 
             for command in targetcogobject.get_commands():
