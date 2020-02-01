@@ -107,7 +107,7 @@ class Mod(commands.Cog):
             file_buffer = io.StringIO('\n'.join(output_list))
             await ctx.send(file=discord.File(fp=file_buffer, filename=f"{ctx.guild.name}-quotes.txt"))
             for line in quotes:
-                beanbase.RemoveQuote(line[2])
+                beanbase.RemoveQuote(str(ctx.server.id), line[2])
 
     @commands.command()
     async def RemoveCommand(self, ctx, command: str):
