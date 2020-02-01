@@ -173,7 +173,7 @@ class Shadownet(commands.Cog):
             else:
                 await ctx.send(f"{item} is cool! Here is a link to the page of illegal things <{address}>")
 
-    @illegal.error
+    @Illegal.error
     async def Illegal_eh(self, ctx: commands.Context, err):
         await ctx.send("Ok, how? Something has gone terribly wrong here, please alert Aksu#1010")
 
