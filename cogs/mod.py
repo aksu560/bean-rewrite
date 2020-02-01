@@ -34,8 +34,8 @@ class Mod(commands.Cog):
                 await ctx.send("Command already exists")
                 return
 
-            for command in self.client.commands:
-                if command.name.capitalize() == ctx.command.name:
+            for client_command in self.client.commands:
+                if client_command.name.capitalize() == command.capitalize():
                     await ctx.send("Command conflicts with a premade command")
                     return
 
