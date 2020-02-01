@@ -30,6 +30,8 @@ class Help(commands.Cog):
             if targetcog.lower() in restrictedCogs and str(ctx.author.id) not in beanbase.GetBotAdmins():
                 await ctx.send(">:c")
                 return
+            else:
+                print(targetcog.lower() + " not in " + restrictedCogs)
 
             targetcogobject = self.client.get_cog(targetcog.capitalize())
             if targetcogobject is None:
