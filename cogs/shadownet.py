@@ -99,7 +99,7 @@ class Example(commands.Cog):
 
             await ctx.send(output)
 
-    @character.error
+    @Character.error
     async def character_eh(self, ctx: commands.Context, err: Exception):
         await ctx.send("You didn't specify a character to look for :c")
 
