@@ -57,13 +57,13 @@ class Custom_command(Base):
     __tablename__ = 'custom_command'
 
     server_id = Column('server_id', String(20), ForeignKey('servers.server_id'))
-    command_id = Column('command_id', Integer, primary_key=True)
+    command_id = Column('command_id', Integer, primary_key=True, autoincrement=True)
     command_name = Column('command_name', String(64))
-    output_object = Column('output_objectt', LargeBinary)
+    output_text = Column('output_text', String(1000))
     help_text = Column('help_text', String(32))
 
     def __repr__(self):
-        return [self.server_id, self.command_name, pickle.loads(self.output_object), self.help_text]
+        return [self.server_id, self.command_name, self.output_text, self.help_text]
 
 
 # Quotes table
@@ -107,7 +107,7 @@ def AddServer(server_id):
 
 
 # Function for querying a server entry from the servers table. Returns a list object
-# [server_id: str, server_level: bool, ], or None if server was not found from the table.
+# [server_id: str, server_level: int, ], or None if server was not found from the table.
 def GetServer(wanted_server_id):
     for queryresult in db.query(Servers).filter(Servers.server_id == wanted_server_id):
         return [queryresult.server_id,
@@ -245,3 +245,30 @@ def GetBotAdmins():
 # Back up the database
 def Backup():
     subprocess.run("/vagrant/cogs/tools/backup.sh", shell=True)
+
+
+# Add a custom command into the database
+def AddCustomCommand(server, command, content, help):
+    for result in db.query(Custom_command):
+        if result.command_name == command:
+            return False
+
+    new_command = Custom_command(server_id=server, command_name=command, output_text=content, help_text=help)
+    db.add(new_command)
+    db.commit()
+    print(f"New custom command {command}: {content} added for server {server}")
+    return True
+
+
+# Get all custom commands for specified server
+def GetCustomCommands(server):
+    output = {}
+    for queryresult in db.query(Custom_command).filter_by(server_id=server):
+        output[queryresult.command_name] = {"output": queryresult.output_text,
+                                            "help_text": queryresult.help_text}
+    return output
+
+
+# Delete a custom command
+def RemoveCustomCommand():
+    pass
