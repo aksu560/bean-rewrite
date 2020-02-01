@@ -26,7 +26,7 @@ class Mod(commands.Cog):
 
         if server_commands:
 
-            if server_level < 2 and len(server_commands) > 10:
+            if server_level < 2 and len(server_commands) >= 10:
                 await ctx.send("You are over your cap of 10 commands :c Sorry, but drive space isnt free.")
                 return
 
