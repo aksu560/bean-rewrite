@@ -18,7 +18,7 @@ class Example(commands.Cog):
         return ctx.guild.id in approved_guilds
 
     @commands.command(brief="[Character Name]")
-    async def character(self, ctx, input: str = None):
+    async def Character(self, ctx, input: str = None):
         """Displays a shadownet characters wiki page"""
         async with ctx.channel.typing():
 
