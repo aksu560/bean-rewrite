@@ -39,22 +39,21 @@ class Servers(Base):
                 pickle.loads(self.settings)]
 
 
-# Roles table
-class Role(Base):
-    __tablename__ = 'role'
+# Server Admins table
+class ServerAdmins(Base):
+    __tablename__ = 'server_admins'
 
     server_id = Column('server_id', String(20), ForeignKey('servers.server_id'))
-    role_id = Column('role_id', String(20), primary_key=True)
-    perms_object = Column('perms_object', LargeBinary)
+    user_id = Column('role_id', String(20), primary_key=True)
     servers = relationship("Servers", back_populates='roles')
 
     def __repr__(self):
-        return [self.server_id, self.role_id, pickle.loads(self.perms_object)]
+        return [self.server_id, self.user_id]
 
 
 # Custom commands table
-class Custom_command(Base):
-    __tablename__ = 'custom_command'
+class CustomCommand(Base):
+    __tablename__ = 'custom_commands'
 
     server_id = Column('server_id', String(20), ForeignKey('servers.server_id'))
     command_id = Column('command_id', Integer, primary_key=True, autoincrement=True)
@@ -185,11 +184,11 @@ def Backup():
 
 # Add a custom command into the database
 def AddCustomCommand(server, command, content, help):
-    for result in db.query(Custom_command):
+    for result in db.query(CustomCommand):
         if result.command_name == command:
             return False
 
-    new_command = Custom_command(server_id=server, command_name=command, output_text=content, help_text=help)
+    new_command = CustomCommand(server_id=server, command_name=command, output_text=content, help_text=help)
     db.add(new_command)
     db.commit()
     print(f"New custom command {command}: {content} added for server {server}")
@@ -200,7 +199,7 @@ def AddCustomCommand(server, command, content, help):
 # Command1 Help], [Command2 ID]...]
 def GetCustomCommands(server):
     output = []
-    for queryresult in db.query(Custom_command).filter_by(server_id=server):
+    for queryresult in db.query(CustomCommand).filter_by(server_id=server):
         output.append([queryresult.command_id,
                        queryresult.command_name,
                        queryresult.output_text,
@@ -213,10 +212,40 @@ def GetCustomCommands(server):
 # Delete a custom command. Returns None if no commands were found, True if a command was deleted, or False if
 # specified command was not found
 def RemoveCustomCommand(server, command):
-    for query_result in db.query(Custom_command).filter(Custom_command.server_id == server):
+    for query_result in db.query(CustomCommand).filter(CustomCommand.server_id == server):
         if query_result.command_name == command:
             db.delete(query_result)
             db.commit()
             return True
 
     return False
+
+
+# Add a new server level administrator. Returns True if successful, False if not
+def AddServerAdmin(server, granted_user_id):
+    for result in db.query(BotAdmins).filter(ServerAdmins.server_id == server):
+        if result.user_id == granted_user_id:
+            return False
+
+    new_admin = ServerAdmins(user_id=granted_user_id, admin_since=datetime.now(), made_admin_by=granter_id)
+    db.add(new_admin)
+    db.commit()
+    return True
+
+
+# Remove a server level administrator. Returns True if successful, False if not
+def RemoveServerAdmin(server, removed_id):
+    for result in db.query(ServerAdmins).filter(ServerAdmins.server_id == server):
+        if result.user_id == removed_id:
+            db.delete(result)
+            db.commit()
+            return True
+    return False
+
+
+# Return a list of all server level administrators
+def GetServerAdmins(server):
+    output = []
+    for result in db.query(ServerAdmins).filter(ServerAdmins.server_id == server):
+        output.append(result.user_id)
+    return output
