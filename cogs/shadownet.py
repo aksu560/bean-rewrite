@@ -138,7 +138,7 @@ class Shadownet(commands.Cog):
                 await ctx.send(jobListing)
 
     @commands.command(brief="[Item]")
-    async def illegal(self, ctx: commands.Context, *, item: str = ""):
+    async def Illegal(self, ctx: commands.Context, *, item: str = ""):
         """Checks for legality of the specified thing"""
 
         async with ctx.channel.typing():
@@ -174,7 +174,7 @@ class Shadownet(commands.Cog):
                 await ctx.send(f"{item} is cool! Here is a link to the page of illegal things <{address}>")
 
     @illegal.error
-    async def illegal_eh(self, ctx: commands.Context, err):
+    async def Illegal_eh(self, ctx: commands.Context, err):
         await ctx.send("Ok, how? Something has gone terribly wrong here, please alert Aksu#1010")
 
 
