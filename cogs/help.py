@@ -39,26 +39,26 @@ class Help(commands.Cog):
                     for command in custom_commands:
                         commands_text += f"\n    &{command[1]} "
                         commands_text += f"/* {command[3]} */"
-                    return
+
                 else:
                     await ctx.send("There's no custom commands on this server.")
+
+            else:
+                if "cogs." + target_cog.lower() in restricted_cogs and str(ctx.author.id) not in beanbase.GetBotAdmins():
+                    await ctx.send(">:c")
                     return
 
-            if "cogs." + target_cog.lower() in restricted_cogs and str(ctx.author.id) not in beanbase.GetBotAdmins():
-                await ctx.send(">:c")
-                return
+                target_cog_object = self.client.get_cog(target_cog.capitalize())
+                if target_cog_object is None:
+                    await ctx.send(f"{target_cog} was not found :c")
+                    return
 
-            target_cog_object = self.client.get_cog(target_cog.capitalize())
-            if target_cog_object is None:
-                await ctx.send(f"{target_cog} was not found :c")
-                return
+                commands_text = f"Here are all the commands in {target_cog_object.qualified_name}```css"
 
-            commands_text = f"Here are all the commands in {target_cog_object.qualified_name}```css"
-
-            for command in target_cog_object.get_commands():
-                commands_text += f"\n    &{command.name} "
-                commands_text += f"{command.brief} " if command.brief is not None else ""
-                commands_text += f"/* {command.help} */"
+                for command in target_cog_object.get_commands():
+                    commands_text += f"\n    &{command.name} "
+                    commands_text += f"{command.brief} " if command.brief is not None else ""
+                    commands_text += f"/* {command.help} */"
 
         # Cuts the output to multiple messages if the output would go over Discord's character limit
         if len(commands_text) > 2000:
