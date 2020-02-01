@@ -66,6 +66,7 @@ async def on_guild_remove(guild):
 
 @client.check
 async def run_custom_commands(ctx):
+    print("I dunno?")
     custom_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
     await ctx.send(str(custom_commands))
     for command in custom_commands:
