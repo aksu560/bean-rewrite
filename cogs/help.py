@@ -20,10 +20,9 @@ class Help(commands.Cog):
 
             for cog in self.client.allCogs:
                 if cog in restrictedCogs:
-                    if ctx.author.id in beanbase.GetBotAdmins():
+                    if str(ctx.author.id) in beanbase.GetBotAdmins():
                         commandsText += f"{cog[4:]}\n"
                     else:
-                        print(ctx.author.id + " not in " + beanbase.GetBotAdmins())
                         continue
                 else:
                     commandsText += f"{cog[4:]}\n"
