@@ -48,7 +48,7 @@ class Mod(commands.Cog):
         attachment_url = ctx.message.attachments[0].url
         file_request = requests.get(attachment_url).text
         count = 0
-        for quote in file_request:
+        for quote in file_request.split("\n"):
             print(quote)
             # beanbase.AddQuote(str(ctx.guild.id), str(ctx.author.display_name), quote)
             count += 1
