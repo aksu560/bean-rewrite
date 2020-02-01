@@ -37,8 +37,8 @@ class Help(commands.Cog):
                     commands_text = f"Here are all the commands in Custom```css"
 
                     for command in custom_commands:
-                        commands_text += f"\n    &{command} "
-                        commands_text += f"/* {command['help_text']} */"
+                        commands_text += f"\n    &{command[1]} "
+                        commands_text += f"/* {command[3]} */"
                     return
                 else:
                     await ctx.send("There's no custom commands on this server.")

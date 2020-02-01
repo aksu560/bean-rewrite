@@ -260,13 +260,16 @@ def AddCustomCommand(server, command, content, help):
     return True
 
 
-# Get all custom commands for specified server
+# Get all custom commands for specified server in format [[Command1 ID, Command1 name, Command1 Output,
+# Command1 Help], [Command2 ID]...]
 def GetCustomCommands(server):
-    output = {}
+    output = []
     for queryresult in db.query(Custom_command).filter_by(server_id=server):
-        output[queryresult.command_name] = {"output": queryresult.output_text,
-                                            "help_text": queryresult.help_text}
-    if output == {}:
+        output.append([queryresult.command_id,
+                       queryresult.command_name,
+                       queryresult.output_text,
+                       queryresult.help_text])
+    if not output:
         output = None
     return output
 
