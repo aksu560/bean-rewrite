@@ -195,6 +195,7 @@ def GetServerAdmins(server):
     output = []
     for query_result in db.query(Servers).filter(Servers.server_id == server):
         server_settings = pickle.loads(query_result.settings)
+        print(server_settings)
         return server_settings['administrators']
 
 
