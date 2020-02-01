@@ -22,7 +22,7 @@ class Fun(commands.Cog):
     async def AddQuote(self, ctx, quote: str):
         """Add a quote"""
 
-        beanbase.AddQuote(str(ctx.guild.id), str(ctx.author.nick), quote)
+        beanbase.AddQuote(str(ctx.guild.id), str(ctx.author.display_name), quote)
         await ctx.send("Quote Added")
 
     @AddQuote.error
