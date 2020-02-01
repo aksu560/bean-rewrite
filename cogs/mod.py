@@ -52,10 +52,10 @@ class Mod(commands.Cog):
             quote_amount = len(beanbase.GetQuotes(str(ctx.guild.id)))
             limit = 100-quote_amount
             print(limit)
-        count = 0
 
+        count = 0
         for quote in file_request:
-            if limit is not None and count <= limit:
+            if limit is not None and count >= limit:
                 break
             beanbase.AddQuote(str(ctx.guild.id), str(ctx.author.display_name), quote)
             count += 1
