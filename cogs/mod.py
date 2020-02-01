@@ -50,11 +50,11 @@ class Mod(commands.Cog):
         response = beanbase.RemoveCustomCommand(str(ctx.guild.id), command.capitalize())
 
         if response is None:
-            ctx.send("There are no custom commands on this server.")
+            await ctx.send("There are no custom commands on this server.")
         if response is True:
-            ctx.send(f"Custom Command {command.capitalize()} has been removed.")
+            await ctx.send(f"Custom Command {command.capitalize()} has been removed.")
         if response is False:
-            ctx.send(f"No custom command {command.capitalize()} found.")
+            await ctx.send(f"No custom command {command.capitalize()} found.")
 
 
 def setup(client: commands.Bot):
