@@ -279,6 +279,7 @@ def GetCustomCommands(server):
 def RemoveCustomCommand(server, command):
     for query_result in db.query(Custom_command).filter(Custom_command.server_id == server and
                                                         Custom_command.command_name == command):
+        print(query_result)
         db.delete(query_result)
         db.commit()
         return True
