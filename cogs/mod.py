@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import io
 from discord.ext import commands
 import discord
 
@@ -21,6 +22,22 @@ class Mod(commands.Cog):
         return False
 
     @commands.command()
+    async def ListQuotes(self, ctx):
+        output_list = []
+        quotes = beanbase.GetQuotes()
+        for line in quotes:
+            output_list.append(f"{line[0]} added by {line[1]}")
+        file_buffer = io.StringIO('\n'.join(output_list))
+        await ctx.send(file=file_buffer)
+
+    @commands.command()
+    async def RemoveQuote(self, ctx, quote: str):
+        """Remove a quote"""
+
+        beanbase.RemoveQuote(str(ctx.guild.id), quote)
+        await ctx.send("Quote Removed")
+
+    @commands.command()
     async def AddCommand(self, ctx, command: str, content: str, help: str):
         """Add a custom command for the server"""
         server_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
@@ -28,7 +45,7 @@ class Mod(commands.Cog):
         print(command)
 
         if " " in command:
-            await ctx.send("No spaces in command names. How do I know whats the command,a nd what's the argument then?")
+            await ctx.send("No spaces in command names. How do I know whats the command, and what's the argument then?")
             return
 
         if server_commands:
