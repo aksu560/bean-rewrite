@@ -31,7 +31,7 @@ class Help(commands.Cog):
                 await ctx.send(">:c")
                 return
             else:
-                print(targetcog.lower() + " not in " + restrictedCogs)
+                print(targetcog.lower() + " not in " + str(restrictedCogs))
 
             targetcogobject = self.client.get_cog(targetcog.capitalize())
             if targetcogobject is None:
