@@ -64,8 +64,8 @@ async def on_guild_remove(guild):
     beanbase.RemoveServer((str(guild.id)))
 
 
-@client.check
-async def run_custom_commands(ctx):
+@client.event
+async def on_command_error(ctx, error):
     print("I dunno?")
     custom_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
     await ctx.send(str(custom_commands))
