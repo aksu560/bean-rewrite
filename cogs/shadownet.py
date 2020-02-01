@@ -9,7 +9,7 @@ from fuzzywuzzy import fuzz
 import math
 
 
-class Example(commands.Cog):
+class Shadownet(commands.Cog):
     """This cog has server specific commands, and only works on the specified servers."""
 
     def __init__(self, client: commands.Bot):
@@ -138,4 +138,4 @@ class Example(commands.Cog):
 
 
 def setup(client: commands.Bot):
-    client.add_cog(Example(client))
+    client.add_cog(Shadownet(client))
