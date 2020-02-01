@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from discord.ext import commands
+
 from cogs.tools import beanbase
 
 
@@ -43,6 +44,17 @@ class Mod(commands.Cog):
             await ctx.send(f"Command &{command.capitalize()} has been added")
         else:
             await ctx.send("Something went wrong")
+
+    @commands.command()
+    async def RemoveCommand(self, ctx, command: str):
+        response = beanbase.RemoveCustomCommand(str(ctx.guild.id), command.capitalize())
+
+        if response is None:
+            ctx.send("There are no custom commands on this server.")
+        if response is True:
+            ctx.send(f"Custom Command {command.capitalize()} has been removed.")
+        if response is False:
+            ctx.send(f"No custom command {command.capitalize()} found.")
 
 
 def setup(client: commands.Bot):
