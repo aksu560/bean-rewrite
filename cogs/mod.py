@@ -92,22 +92,22 @@ class Mod(commands.Cog):
         else:
             await ctx.send("Something went wrong")
 
-        @commands.command(brief="[Read the help text]")
-        async def NukeQuotes(self, ctx, confirmation: str):
-            """Deletes all Quotes"""
-            if confirmation != ctx.guild.name:
-                await ctx.send("This command deletes all the quotes from the server. It has 2 safeguards built in. 1. "
-                               "you have to give the name of the server as an argument for the command, and 2. It "
-                               "dumps a list of all the ld quotes before deleting anything.")
-            else:
-                output_list = []
-                quotes = beanbase.GetQuotes(str(ctx.guild.id))
-                for line in quotes:
-                    output_list.append(f"{line[0]} added by {line[1]}. Quote ID:{line[2]}")
-                file_buffer = io.StringIO('\n'.join(output_list))
-                await ctx.send(file=discord.File(fp=file_buffer, filename=f"{ctx.guild.name}-quotes.txt"))
-                for line in quotes:
-                    beanbase.RemoveQuote(line[2])
+    @commands.command(brief="[Read the help text]")
+    async def NukeQuotes(self, ctx, confirmation: str):
+        """Deletes all Quotes"""
+        if confirmation != ctx.guild.name:
+            await ctx.send("This command deletes all the quotes from the server. It has 2 safeguards built in. 1. "
+                           "you have to give the name of the server as an argument for the command, and 2. It "
+                           "dumps a list of all the ld quotes before deleting anything.")
+        else:
+            output_list = []
+            quotes = beanbase.GetQuotes(str(ctx.guild.id))
+            for line in quotes:
+                output_list.append(f"{line[0]} added by {line[1]}. Quote ID:{line[2]}")
+            file_buffer = io.StringIO('\n'.join(output_list))
+            await ctx.send(file=discord.File(fp=file_buffer, filename=f"{ctx.guild.name}-quotes.txt"))
+            for line in quotes:
+                beanbase.RemoveQuote(line[2])
 
     @commands.command()
     async def RemoveCommand(self, ctx, command: str):
