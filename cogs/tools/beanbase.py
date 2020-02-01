@@ -236,6 +236,7 @@ def AddServerAdmin(server, granted_user_id):
 # Remove a server level administrator. Returns True if successful, False if not
 def RemoveServerAdmin(server, removed_id):
     for result in db.query(ServerAdmins).filter(ServerAdmins.server_id == server):
+        print(result.user_id)
         if result.user_id == removed_id:
             db.delete(result)
             db.commit()
