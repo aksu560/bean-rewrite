@@ -15,6 +15,11 @@ class Help(commands.Cog):
         mod_cogs = ["cogs.mod"]
         custom_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
         bot_admins = beanbase.GetBotAdmins()
+        server_admins = beanbase.GetServerAdmins(str(ctx.guild.id))
+        # We do this to simplify further code, as you cannot iterate over an empty list. The user ID is always
+        # numeric, so text will never match
+        if server_admins is None:
+            server_admins.append("foo")
 
         if target_cog == "":
             commands_text = f"Here are all the cogs available, please use &Help [cogname] for" \
@@ -27,7 +32,9 @@ class Help(commands.Cog):
                     else:
                         continue
                 elif cog in mod_cogs:
-                    if ctx.author.guild_permissions.administrator or str(ctx.author.id) in bot_admins:
+
+                    if ctx.author.guild_permissions.administrator or str(ctx.author.id) in bot_admins or \
+                            str(ctx.author.id) in server_admins:
                         commands_text += f"{cog[4:]}\n"
                 else:
                     commands_text += f"{cog[4:]}\n"
@@ -49,7 +56,7 @@ class Help(commands.Cog):
                     await ctx.send("There's no custom commands on this server.")
 
             else:
-                if "cogs." + target_cog.lower() in restricted_cogs and str(ctx.author.id) not in beanbase.GetBotAdmins():
+                if "cogs." + target_cog.lower() in restricted_cogs and str(ctx.author.id) not in bot_admins:
                     await ctx.send(">:c")
                     return
 
