@@ -255,6 +255,7 @@ def GetServerAdmins(server):
 # Add a new quote to the DB
 def AddQuote(server, user, quote_text):
     new_quote = Quote(server_id=server, text=quote_text, user=user)
+    db.add(new_quote)
     db.commit()
     return True
 
