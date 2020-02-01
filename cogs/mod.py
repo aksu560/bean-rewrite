@@ -24,7 +24,7 @@ class Mod(commands.Cog):
     @commands.command()
     async def ListQuotes(self, ctx):
         output_list = []
-        quotes = beanbase.GetQuotes()
+        quotes = beanbase.GetQuotes(str(ctx.guild.id))
         for line in quotes:
             output_list.append(f"{line[0]} added by {line[1]}")
         file_buffer = io.StringIO('\n'.join(output_list))
