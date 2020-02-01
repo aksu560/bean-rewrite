@@ -27,6 +27,11 @@ class Mod(commands.Cog):
             await ctx.send("Command already exists")
             return
 
+        for command in self.client.commands:
+            if command.name.capitalize() == ctx.command.name:
+                await ctx.send("Command conflicts with a premade command")
+                return
+
         if beanbase.AddCustomCommand(ctx.guild.id, command.capitalize(), content, help):
             await ctx.send(f"Command &{command.capitalize()} has been added")
         else:
