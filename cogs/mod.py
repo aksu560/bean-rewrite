@@ -16,7 +16,12 @@ class Mod(commands.Cog):
     def cog_check(self, ctx):
         user = str(ctx.author.id)
         bot_admins = beanbase.GetBotAdmins()
-        if user in bot_admins:
+        server_admins = beanbase.GetServerAdmins(str(ctx.guild.id))
+        # We do this so if there is no server admins, the command still works. User ID's are always numeric,
+        # so text will never match
+        if server_admins is None:
+            server_admins.append("Foo")
+        if user in bot_admins or user in server_admins:
             return True
         if ctx.author.guild_permissions.administrator:
             return True
