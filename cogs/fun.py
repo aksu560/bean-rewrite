@@ -22,6 +22,7 @@ class Fun(commands.Cog):
     async def AddQuote(self, ctx, quote: str):
         """Add a quote"""
 
+        # This limits the number of quotes per server to 100, unless upgraded
         quote_amount = len(beanbase.GetQuotes(str(ctx.guild.id)))
         if quote_amount >= 100 and beanbase.GetServer(str(ctx.guild.id))["level"] < 2:
             await ctx.send("You have reached the 100 quote limit for normal servers. Im sorry for this, but disk "
