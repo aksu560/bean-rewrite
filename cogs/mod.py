@@ -70,6 +70,8 @@ class Mod(commands.Cog):
     async def AddCommand(self, ctx, command: str, content: str, help: str):
         """Add a custom command for the server"""
 
+        command = "%s%s" % (command[0].upper(), command[1:])
+
         if len(help) > 30:
             await ctx.send("Help text cannot be longer than 30 characters")
             return
@@ -100,7 +102,7 @@ class Mod(commands.Cog):
                 return
 
             for client_command in self.client.commands:
-                if client_command.name.capitalize() == command.capitalize():
+                if client_command.name == command:
                     await ctx.send("Command conflicts with a premade command")
                     return
 
