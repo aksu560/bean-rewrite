@@ -69,6 +69,20 @@ class Mod(commands.Cog):
     @commands.command()
     async def AddCommand(self, ctx, command: str, content: str, help: str):
         """Add a custom command for the server"""
+
+        command = "%s%s" % (command[0].upper(), command[1:])
+
+        if len(help) > 30:
+            await ctx.send("Help text cannot be longer than 30 characters")
+            return
+
+        if len(content) > 950:
+            await ctx.send("The content of the command cannot be longer than 950 characters")
+            return
+
+        if len(command) > 60:
+            await ctx.send("The length of the command cannot be longer than 60 characters")
+
         server_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
         server_level = beanbase.GetServer(str(ctx.guild.id))["level"]
         print(command)
@@ -88,12 +102,12 @@ class Mod(commands.Cog):
                 return
 
             for client_command in self.client.commands:
-                if client_command.name.capitalize() == command.capitalize():
+                if client_command.name == command:
                     await ctx.send("Command conflicts with a premade command")
                     return
 
-        if beanbase.AddCustomCommand(ctx.guild.id, command.capitalize(), content, help):
-            await ctx.send(f"Command &{command.capitalize()} has been added")
+        if beanbase.AddCustomCommand(ctx.guild.id, command, content, help):
+            await ctx.send(f"Command &{command} has been added")
         else:
             await ctx.send("Something went wrong")
 
