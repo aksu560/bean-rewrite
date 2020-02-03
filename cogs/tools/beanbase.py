@@ -78,6 +78,7 @@ class Quote(Base):
         return [self.server_id, self.command_name, pickle.loads(self.output_object), self.help_text]
 
 
+# Bot Admins table
 class BotAdmins(Base):
     __tablename__ = 'bot_admins'
 
@@ -96,7 +97,7 @@ db = Session()
 db.commit()
 
 
-# Function for adding new servers to the table. Returns True if successful.
+# Function for adding new servers to the table. Returns True once ran
 def AddServer(server_id):
     db.add(Servers(server_id=server_id,
                    server_level=1,
@@ -117,6 +118,7 @@ def GetServer(wanted_server_id):
     return None
 
 
+# Update the server's level. Right now only used for uncapping quote and custom command amount
 def UpdateServerLevel(wanted_server_id, server_level):
     for queryresult in db.query(Servers).filter(Servers.server_id == wanted_server_id):
         queryresult.server_level = server_level
@@ -133,6 +135,7 @@ def RemoveServer(wanted_server_id):
     return False
 
 
+# Returns the settings object for specified server
 def GetServerSettings(server):
     for queryresult in db.query(Servers).filter(Servers.server_id == server):
         return pickle.loads(queryresult.settings)
@@ -159,6 +162,7 @@ def AddBotAdmin(granted_user_id, granter_id):
     return True
 
 
+# More things we run on load. These are here, because they rely on functions defined earlier
 bot_admins = []
 for result in db.query(BotAdmins):
     bot_admins.append(result.user_id)
@@ -178,6 +182,7 @@ def RemoveBotAdmin(removed_id, remover_id):
     return False
 
 
+# Return all bot level administrators
 def GetBotAdmins():
     output = []
     for result in db.query(BotAdmins):
