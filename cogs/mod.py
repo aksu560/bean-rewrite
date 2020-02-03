@@ -119,14 +119,14 @@ class Mod(commands.Cog):
     @commands.command()
     async def RemoveCommand(self, ctx, command: str):
         """Remove a custom command"""
-        response = beanbase.RemoveCustomCommand(str(ctx.guild.id), command.capitalize())
+        response = beanbase.RemoveCustomCommand(str(ctx.guild.id), command)
 
         if response is None:
             await ctx.send("There are no custom commands on this server.")
         if response is True:
-            await ctx.send(f"Custom Command {command.capitalize()} has been removed.")
+            await ctx.send(f"Custom Command {command} has been removed.")
         if response is False:
-            await ctx.send(f"No custom command {command.capitalize()} found.")
+            await ctx.send(f"No custom command {command} found.")
 
     @commands.command(brief="[tag someone]")
     async def AddServerAdmin(self, ctx, new_admin: discord.Member):
