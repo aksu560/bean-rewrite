@@ -69,6 +69,11 @@ class Mod(commands.Cog):
     @commands.command()
     async def AddCommand(self, ctx, command: str, content: str, help: str):
         """Add a custom command for the server"""
+
+        if len(help) < 30:
+            await ctx.send("Help text cannot be longer than 30 characters")
+            return
+
         server_commands = beanbase.GetCustomCommands(str(ctx.guild.id))
         server_level = beanbase.GetServer(str(ctx.guild.id))["level"]
         print(command)
