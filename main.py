@@ -53,6 +53,17 @@ async def on_ready():
 
 @client.event
 async def on_message(msg):
+    if msg.content.startswith("&"):
+        if str(datetime.date.today().month) == "4":
+            print("Date works")
+            if str(datetime.date.today().day) == "1" or str(datetime.date.day) == "2":
+                print("and so does the day :D")
+                if random.randint(0, 1) == 1:
+                    print("bamboozled")
+                    await msg.channel.send("No")
+                    return
+                else:
+                    print("Not Bamboozled")
     await client.process_commands(msg)
 
 
@@ -66,20 +77,6 @@ async def on_guild_join(guild):
 async def on_guild_remove(guild):
     print(f"Left {guild.name}. Removed from db")
     beanbase.RemoveServer((str(guild.id)))
-
-
-@client.event
-async def on_command(ctx):
-    if str(datetime.date.today().month) == "4":
-        print("Date works")
-        if str(datetime.date.today().day) == "1" or str(datetime.date.day) == "2":
-            print("and so does the day :D")
-            if random.randint(0, 1) == 1:
-                print("bamboozled")
-                await ctx.send("No")
-                return
-            else:
-                print("Not Bamboozled")
 
 
 @client.event
