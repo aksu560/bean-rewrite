@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import random
 from discord.ext import commands
+import datetime
 
 from cogs.tools import beanbase
 
@@ -14,7 +15,7 @@ class Fun(commands.Cog):
     @commands.command()
     async def Quote(self, ctx):
         """Get a random quote"""
-
+        print(datetime.date.today())
         quote = random.choice(beanbase.GetQuotes(str(ctx.guild.id)))
         await ctx.send(f"{quote[0]}\nAdded by {quote[1]}. Quote ID:{quote[2]}")
 
