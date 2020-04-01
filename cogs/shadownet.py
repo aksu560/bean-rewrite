@@ -26,7 +26,7 @@ class Shadownet(commands.Cog):
                 print("and so does the day :D")
                 if random.randint(0, 1) == 1:
                     await ctx.send (random.choice(["No", "Heck off!", "Do it yourself", "Seems like effort", "Nah", "Not feeling like it", "How would you feel if I asked you constantly for stuff?"]))
-                    return
+                    return False
 
         return ctx.guild.id in self.approved_guilds
 
