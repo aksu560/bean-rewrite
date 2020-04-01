@@ -114,7 +114,8 @@ class Shadownet(commands.Cog):
 
     @Character.error
     async def character_eh(self, ctx: commands.Context, err: Exception):
-        await ctx.send("You didn't specify a character to look for :c")
+        if str(err) != "The check functions for command Illegal failed.":
+            await ctx.send("You didn't specify a character to look for :c")
 
     @commands.command()
     async def Jobs(self, ctx):
