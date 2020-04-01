@@ -67,17 +67,19 @@ async def on_guild_remove(guild):
     print(f"Left {guild.name}. Removed from db")
     beanbase.RemoveServer((str(guild.id)))
 
+
+@client.event
 async def on_command(ctx):
     if str(datetime.date.today().month) == "4":
         print("Date works")
         if str(datetime.date.today().day) == "1" or str(datetime.date.day) == "2":
             print("and so does the day :D")
-            if random.randint(0,1) == 1:
+            if random.randint(0, 1) == 1:
+                print("bamboozled")
                 await ctx.send("No")
                 return
             else:
-                print("Bamboozled")
-
+                print("Not Bamboozled")
 
 
 @client.event
@@ -92,5 +94,6 @@ async def on_command_error(ctx, error):
             await ctx.send(command[2])
             return
     print(error)
+
 
 client.run(clientKey)
