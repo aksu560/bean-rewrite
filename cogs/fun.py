@@ -19,8 +19,9 @@ class Fun(commands.Cog):
             if str(datetime.date.today().day) == "1" or str(datetime.date.day) == "2":
                 print("and so does the day :D")
                 if random.randint(0, 1) == 1:
-                    await ctx.send (random.choice(["No", "Heck off!", "Do it yourself", "Seems like effort", "Nah", "Not feeling like it", "How would you feel if I asked you constantly for stuff?"]))
+                    await ctx.send(random.choice(["No", "Heck off!", "Do it yourself", "Seems like effort", "Nah", "Not feeling like it", "How would you feel if I asked you constantly for stuff?"]))
                     return False
+        return True
 
     @commands.command()
     async def Quote(self, ctx):
