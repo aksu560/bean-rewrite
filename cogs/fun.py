@@ -19,6 +19,7 @@ class Fun(commands.Cog):
             print("Date works")
             if str(datetime.date.today().day) == "1" or str(datetime.date.day) == "2":
                 print("and so does the day :D")
+                await ctx.send("<https://i.kym-cdn.com/photos/images/facebook/001/693/395/974.png>")
 
         quote = random.choice(beanbase.GetQuotes(str(ctx.guild.id)))
         await ctx.send(f"{quote[0]}\nAdded by {quote[1]}. Quote ID:{quote[2]}")
