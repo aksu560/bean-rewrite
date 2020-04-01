@@ -53,6 +53,7 @@ async def on_ready():
 
 @client.event
 async def on_message(msg):
+    print(msg.content)
     if msg.content.startswith("&"):
         if str(datetime.date.today().month) == "4":
             print("Date works")
