@@ -15,10 +15,9 @@ class Fun(commands.Cog):
     @commands.command()
     async def Quote(self, ctx):
         """Get a random quote"""
-        print (datetime.date.today().day)
-        if datetime.date.month == datetime.date.month(4):
+        if str(datetime.date.today().month) == "4":
             print("Date works")
-            if datetime.date.day == 1 or datetime.date.day == 2:
+            if str(datetime.date.today().day) == "1" or str(datetime.date.day) == "2":
                 print("and so does the day :D")
 
         quote = random.choice(beanbase.GetQuotes(str(ctx.guild.id)))
