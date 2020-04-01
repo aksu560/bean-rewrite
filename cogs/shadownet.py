@@ -184,6 +184,7 @@ class Shadownet(commands.Cog):
 
     @Illegal.error
     async def Illegal_eh(self, ctx: commands.Context, err):
+        print(err)
         await ctx.send("Ok, how? Something has gone terribly wrong here, please alert Aksu#1010")
 
 
