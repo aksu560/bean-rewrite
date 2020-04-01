@@ -3,6 +3,8 @@ import configparser
 import os
 from cogs.tools import beanbase
 import logging
+import datetime
+import random
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.WARNING)
@@ -64,6 +66,16 @@ async def on_guild_join(guild):
 async def on_guild_remove(guild):
     print(f"Left {guild.name}. Removed from db")
     beanbase.RemoveServer((str(guild.id)))
+
+async def on_command(ctx):
+    if str(datetime.date.today().month) == "4":
+        print("Date works")
+        if str(datetime.date.today().day) == "1" or str(datetime.date.day) == "2":
+            print("and so does the day :D")
+            if random.randint(0,1) == 1:
+                await ctx.send("No")
+                return
+
 
 
 @client.event
