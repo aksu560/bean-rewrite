@@ -15,6 +15,7 @@ class Fun(commands.Cog):
     @commands.command()
     async def Quote(self, ctx):
         """Get a random quote"""
+        print (datetime.date.today.day)
         if datetime.date.month == datetime.date.month(4):
             print("Date works")
             if datetime.date.day == 1 or datetime.date.day == 2:
