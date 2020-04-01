@@ -75,6 +75,8 @@ async def on_command(ctx):
             if random.randint(0,1) == 1:
                 await ctx.send("No")
                 return
+            else:
+                print("Bamboozled")
 
 
 
