@@ -15,7 +15,9 @@ class Fun(commands.Cog):
     @commands.command()
     async def Quote(self, ctx):
         """Get a random quote"""
-        print(datetime.date.today()[:4])
+        if datetime.date.month() == 4 and datetime.date.day() in [1, 2]:
+            print("Yep")
+
         quote = random.choice(beanbase.GetQuotes(str(ctx.guild.id)))
         await ctx.send(f"{quote[0]}\nAdded by {quote[1]}. Quote ID:{quote[2]}")
 
