@@ -88,7 +88,7 @@ class Help(commands.Cog):
     async def ServerInfo(self, ctx):
         server_admins = ""
         for admin in beanbase.GetServerAdmins(str(ctx.guild.id)):
-            server_admins += f"{self.client.get_user(admin).name}, "
+            server_admins += f"{self.client.get_user(int(admin)).name}, "
         server_admins = server_admins[:-2]
 
         server_quotes = beanbase.GetQuotes(str(ctx.guild.id))
@@ -102,8 +102,8 @@ class Help(commands.Cog):
         else:
             quote_plural = "quotes"
 
-        output = f"```Info about {ctx.guild.name}" \
-                 f"Server Admins are: {server_admins}" \
+        output = f"```css Info about {ctx.guild.name}\n" \
+                 f"Server Admins are: {server_admins}\n" \
                  f"This server has {quote_status} {quote_plural}```"
 
         await ctx.send(output)
