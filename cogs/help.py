@@ -97,12 +97,13 @@ class Help(commands.Cog):
         else:
             quote_status = str(len(server_quotes))
 
-        if quote_status == 1:
+        if int(quote_status) == 1:
             quote_plural = "quote"
         else:
             quote_plural = "quotes"
 
-        output = f"```css Info about {ctx.guild.name}\n" \
+        output = f"```css\n" \
+                 f"Info about {ctx.guild.name}\n" \
                  f"Server Admins are: {server_admins}\n" \
                  f"This server has {quote_status} {quote_plural}```"
 
