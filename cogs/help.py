@@ -84,6 +84,29 @@ class Help(commands.Cog):
         else:
             await ctx.send(commands_text + "```")
 
+    async def ServerInfo(self, ctx):
+        server_admins = ""
+        for admin in beanbase.GetServerAdmins(str(ctx.guild.id)):
+            server_admins += f"{self.client.get_user(admin).name}, "
+        server_admins = server_admins[:-2]
+
+        server_quotes = beanbase.GetQuotes(str(ctx.guild.id))
+        if server_quotes == []:
+            quote_status = "no"
+        else:
+            quote_status = str(len(server_quotes))
+
+        if quote_status == 1:
+            quote_plural = "quote"
+        else:
+            quote_plural = "quotes"
+
+        output = f"```Info about {ctx.guild.name}" \
+                 f"Server Admins are: {server_admins}" \
+                 f"This server has {quote_status} {quote_plural}```"
+
+        await ctx.send(output)
+
 
 def setup(client: commands.Bot):
     client.add_cog(Help(client))
