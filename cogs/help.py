@@ -84,7 +84,7 @@ class Help(commands.Cog):
         else:
             await ctx.send(commands_text + "```")
 
-    @commands.command
+    @commands.command()
     async def ServerInfo(self, ctx):
         server_admins = ""
         for admin in beanbase.GetServerAdmins(str(ctx.guild.id)):
