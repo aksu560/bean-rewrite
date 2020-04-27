@@ -17,6 +17,8 @@ client.cfgParser = configparser.ConfigParser()
 auth = open(os.getcwd() + "/auth.ini")
 client.cfgParser.read_file(auth)
 clientKey = client.cfgParser.get("discord", "key")
+client.dbpswd = client.cfgParser.get("db", "pswd")
+print(client.dbpswd)
 
 client.allCogs = [
     "cogs.help",
