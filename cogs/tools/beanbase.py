@@ -19,7 +19,7 @@ bot_owner_id = "114796980739244032"
 print(f"Bot owner is: {bot_owner_id}")
 print(dbpswd)
 
-db_url = f"postgresql://postgres:root{dbpswd}@localhost/beanbase"
+db_url = f"postgresql://postgres:{dbpswd}@localhost/beanbase"
 
 Session = sessionmaker()
 
