@@ -8,6 +8,7 @@ from cogs.tools import shadownet_wiki
 from cogs.tools.reddit import reddit
 from fuzzywuzzy import fuzz
 import math
+import datetime
 
 
 class Shadownet(commands.Cog):
@@ -17,7 +18,15 @@ class Shadownet(commands.Cog):
         self.client = client
         self.approved_guilds = [160034813040918528, 438287744683474947]
 
-    def cog_check(self, ctx):
+    async def cog_check(self, ctx):
+
+        if str(datetime.date.today().month) == "4":
+            print("Date works")
+            if str(datetime.date.today().day) == "1" or str(datetime.date.day) == "2":
+                print("and so does the day :D")
+                if random.randint(0, 1) == 1:
+                    await ctx.send (random.choice(["No", "Heck off!", "Do it yourself", "Seems like effort", "Nah", "Not feeling like it", "How would you feel if I asked you constantly for stuff?"]))
+                    return False
 
         return ctx.guild.id in self.approved_guilds
 
@@ -105,7 +114,8 @@ class Shadownet(commands.Cog):
 
     @Character.error
     async def character_eh(self, ctx: commands.Context, err: Exception):
-        await ctx.send("You didn't specify a character to look for :c")
+        if str(err) != "The check functions for command Illegal failed.":
+            await ctx.send("You didn't specify a character to look for :c")
 
     @commands.command()
     async def Jobs(self, ctx):
@@ -175,7 +185,8 @@ class Shadownet(commands.Cog):
 
     @Illegal.error
     async def Illegal_eh(self, ctx: commands.Context, err):
-        await ctx.send("Ok, how? Something has gone terribly wrong here, please alert Aksu#1010")
+        if str(err) != "The check functions for command Illegal failed.":
+            await ctx.send("Ok, how? Something has gone terribly wrong here, please alert Aksu#1010")
 
 
 def setup(client: commands.Bot):

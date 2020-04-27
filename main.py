@@ -3,6 +3,8 @@ import configparser
 import os
 from cogs.tools import beanbase
 import logging
+import datetime
+import random
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.WARNING)
@@ -78,5 +80,6 @@ async def on_command_error(ctx, error):
             await ctx.send(command[2])
             return
     print(error)
+
 
 client.run(clientKey)
