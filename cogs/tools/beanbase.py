@@ -6,11 +6,12 @@ from sqlalchemy.orm import sessionmaker, relationship
 import pickle
 import subprocess
 from datetime import datetime
-import configparser
+from main import client
 
 # Replace the ID with your own
 bot_owner_id = "114796980739244032"
 print(f"Bot owner is: {bot_owner_id}")
+print(client.dbpswd)
 
 Session = sessionmaker()
 
