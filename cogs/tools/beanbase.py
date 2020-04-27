@@ -19,13 +19,15 @@ bot_owner_id = "114796980739244032"
 print(f"Bot owner is: {bot_owner_id}")
 print(dbpswd)
 
+db_url = f"postgresql://postgres:root{dbpswd}@localhost/beanbase"
+
 Session = sessionmaker()
 
 # Create the database if it does not exist
-if not database_exists('postgresql://postgres:root@localhost/beanbase'):
-    create_database('postgresql://postgres:root@localhost/beanbase')
+if not database_exists(db_url):
+    create_database(db_url)
 
-engine = create_engine('postgresql://postgres:root@localhost/beanbase')
+engine = create_engine(db_url)
 
 # Declaring the base class for declarative structures
 Base = declarative_base()
