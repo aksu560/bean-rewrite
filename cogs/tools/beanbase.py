@@ -6,28 +6,18 @@ from sqlalchemy.orm import sessionmaker, relationship
 import pickle
 import subprocess
 from datetime import datetime
-import configparser
-import os
-
-cfgParser = configparser.ConfigParser()
-auth = open(os.getcwd() + "/auth.ini")
-cfgParser.read_file(auth)
-dbpswd = cfgParser.get("db", "pswd")
 
 # Replace the ID with your own
 bot_owner_id = "114796980739244032"
 print(f"Bot owner is: {bot_owner_id}")
-print(dbpswd)
-
-db_url = f"postgresql://postgres:{dbpswd}@localhost/beanbase"
 
 Session = sessionmaker()
 
 # Create the database if it does not exist
-if not database_exists(db_url):
-    create_database(db_url)
+if not database_exists('postgresql://postgres:root@localhost/beanbase'):
+    create_database('postgresql://postgres:root@localhost/beanbase')
 
-engine = create_engine(db_url)
+engine = create_engine('postgresql://postgres:root@localhost/beanbase')
 
 # Declaring the base class for declarative structures
 Base = declarative_base()
