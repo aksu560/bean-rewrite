@@ -20,7 +20,6 @@ auth = open(os.getcwd() + "/auth.ini")
 client.cfgParser.read_file(auth)
 clientKey = client.cfgParser.get("discord", "key")
 
-
 client.allCogs = [
     "cogs.help",
     "cogs.fun",
